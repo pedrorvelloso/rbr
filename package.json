@@ -48,8 +48,7 @@
   },
   "lint-staged": {
     "app/**/*": [
-      "yarn check:lint --fix",
-      "yarn check:types"
+      "yarn check:lint --fix"
     ]
   },
   "config": {
