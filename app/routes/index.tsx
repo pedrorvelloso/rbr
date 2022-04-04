@@ -1,6 +1,21 @@
+import type { LoaderFunction } from '@remix-run/node'
+import { useLoaderData } from '@remix-run/react'
+
 import { Heading } from '~/ui/components/typograph'
+import { fetchFromOrigin } from '~/utils/fetchOrigin.server'
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const response = await fetchFromOrigin('twitch/streams', request)
+  const { streams } = await response.json()
+
+  return { streams }
+}
 
 export default function Index() {
+  const { streams } = useLoaderData()
+
+  console.log(streams)
+
   return (
     <div>
       <Heading className="flex items-center gap-x-4 font-bold">
