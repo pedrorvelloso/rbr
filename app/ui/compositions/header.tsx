@@ -27,7 +27,9 @@ export const Header = () => {
         <img
           src="/images/rbr.png"
           alt="Randomizer Brasil"
-          className="py-3 pl-3"
+          className="ml-3"
+          height={30}
+          width={28}
         />
         <ul className="flex gap-x-8 h-full">
           <li className="h-full relative">
