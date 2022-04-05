@@ -8,6 +8,7 @@ import { fetchFromOrigin } from '~/utils/fetchOrigin.server'
 
 import { Heading } from '~/ui/components/typograph'
 import { StreamCard } from '~/ui/components/stream-card'
+import { useStreamsData } from '~/hooks/use-streams-data'
 
 type IndexLoaderData = {
   streams: Array<Stream>
@@ -21,7 +22,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function Index() {
-  const { streams } = useLoaderData<IndexLoaderData>()
+  const { streams: initialStreams } = useLoaderData<IndexLoaderData>()
+  const streams = useStreamsData(initialStreams)
 
   return (
     <div>
