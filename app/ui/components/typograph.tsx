@@ -10,7 +10,7 @@ const heading: {
 
 interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   className?: string
-  size?: keyof typeof heading
+  size?: 'heading1' | 'heading2' | 'heading3'
 }
 
 export const Heading: React.FC<HeadingProps> = ({

@@ -1,4 +1,4 @@
-export interface StreamDto {
+export interface StreamDTO {
   id: string
   user_id: string
   user_name: string
@@ -14,13 +14,15 @@ export interface StreamDto {
 }
 
 export interface HelixStreamsResponse {
-  data: StreamDto[]
+  data: StreamDTO[]
 }
 
 export class Stream {
   id: string
   userId: string
   userName: string
+  profileImageUrl?: string
+  login: string
   gameId: string
   gameName: string
   type: string
@@ -31,10 +33,11 @@ export class Stream {
   thumbnailUrl: string
   tagIds: string[]
 
-  constructor(dto: StreamDto) {
+  constructor(dto: StreamDTO) {
     this.id = dto.id
     this.userId = dto.user_id
     this.userName = dto.user_name
+    this.login = dto.user_name.toLowerCase()
     this.gameId = dto.game_id
     this.gameName = dto.game_name
     this.type = dto.type

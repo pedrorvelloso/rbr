@@ -1,4 +1,11 @@
-export const userList = ['ilher', 'xx_soket_xx']
+export const userList = [
+  'ilher',
+  'xx_soket_xx',
+  'grafittex',
+  'luiferns',
+  'mirageiw',
+]
+
 export const gameList = [
   // Minish cap
   '5635',
@@ -14,6 +21,8 @@ export const gameList = [
   '4375',
   // KH 3
   '369585',
+  // KH HD 1.5 + 2.5 ReMIX
+  '494099',
   // HK
   '490147',
   // Metroid Fusion
