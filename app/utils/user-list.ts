@@ -4,6 +4,7 @@ export const userList = [
   'grafittex',
   'luiferns',
   'mirageiw',
+  'arthuroudini',
 ]
 
 export const gameList = [
