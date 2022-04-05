@@ -1,11 +1,6 @@
-export const userList = [
-  'ilher',
-  'xx_soket_xx',
-  'grafittex',
-  'luiferns',
-  'mirageiw',
-  'arthuroudini',
-]
+import userListJson from '~/users.json'
+
+export const userList = userListJson
 
 export const gameList = [
   // Minish cap
