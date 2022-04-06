@@ -4,14 +4,14 @@ import { useFetcher } from '@remix-run/react'
 import type { TwitchStreamsResponse } from '~/routes/twitch/streams'
 import type { Stream } from '~/services/twitch/models/Stream'
 
-const RENOVATE_DELAY = 1000 * 60 // 1 minute
+const RENOVATE_DELAY = 1000 * 3 // 1 minute
 
 export const useStreamsData = (initialData: Array<Stream>) => {
   const fetcher = useFetcher<TwitchStreamsResponse>()
 
   useEffect(() => {
     const renovateStreams = setInterval(
-      () => fetcher.submit({ action: '/twitch/streams', method: 'get' }),
+      () => fetcher.submit({ action: '/', method: 'get' }),
       RENOVATE_DELAY,
     )
 
