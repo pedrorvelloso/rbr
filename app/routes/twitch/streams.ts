@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async () => {
     { streams },
     {
       headers: {
-        'Cache-Control': 'public, max-age=60, s-maxage=60',
+        'Cache-Control': 's-maxage=60',
       },
     },
   )
