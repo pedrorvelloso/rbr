@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
 import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useNavigate } from '@remix-run/react'
 
 import type { Stream } from '~/services/twitch/models/Stream'
 import { getStreamsWithStreamers } from '~/services/twitch/business.server'
@@ -28,6 +29,17 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const data = useLoaderData<IndexLoaderData>()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => navigate('.', { replace: true }),
+      1000 * 10,
+    )
+
+    return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div>
