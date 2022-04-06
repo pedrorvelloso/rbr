@@ -1,44 +1,38 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
-import type { TwitchStreamsResponse } from './twitch/streams'
 import type { Stream } from '~/services/twitch/models/Stream'
+import { getStreamsWithStreamers } from '~/services/twitch/business.server'
 
-import { fetchFromOrigin } from '~/utils/fetchOrigin.server'
-
-import { Heading } from '~/ui/components/typograph'
-import { StreamCard } from '~/ui/components/stream-card'
-import { useStreamsData } from '~/hooks/use-streams-data'
+import { Streams } from '~/ui/compositions/streams'
 
 type IndexLoaderData = {
   streams: Array<Stream>
+  updatedAt: string
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const response = await fetchFromOrigin('twitch/streams', request)
-  const { streams }: TwitchStreamsResponse = await response.json()
+export const headers: HeadersFunction = () => ({
+  'Cache-Control': 's-maxage=45, stale-while-revalidate=15',
+})
 
-  return { streams }
+export const loader: LoaderFunction = async () => {
+  const streams = await getStreamsWithStreamers()
+  const updatedAt = new Date().toString()
+
+  return json<IndexLoaderData>(
+    { streams, updatedAt },
+    { headers: { 'Cache-Control': 's-maxage=60' } },
+  )
 }
 
 export default function Index() {
   const data = useLoaderData<IndexLoaderData>()
-  const streams = useStreamsData(data.streams)
 
   return (
     <div>
-      <Heading className="flex items-center gap-x-4 font-bold mb-4">
-        Ao vivo{' '}
-        <div className="relative flex items-center justify-center w-fit">
-          <div className="h-[14px] w-[14px] bg-red-600/80 animate-ping rounded-full absolute" />
-          <div className="h-3 w-3 bg-red-600 rounded-full" />
-        </div>
-      </Heading>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {streams.map((stream) => (
-          <StreamCard {...stream} key={stream.id} />
-        ))}
-      </div>
+      <Streams data={data.streams} />
+      <p>{data.updatedAt}</p>
     </div>
   )
 }
