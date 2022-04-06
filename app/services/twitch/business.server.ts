@@ -52,7 +52,7 @@ export const getStreams = async (): Promise<Array<Stream>> => {
 }
 
 export const getStreamsWithStreamers = async (): Promise<Array<Stream>> => {
-  console.log('fetching streams')
+  console.log('[LOG] fetching streams')
   const streams = await getStreams()
   const onlineStreamers = streams.map((stream) => stream.userId)
   const streamers =

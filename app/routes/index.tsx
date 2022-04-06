@@ -1,9 +1,10 @@
 import type { LoaderFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
+import type { TwitchStreamsResponse } from './twitch/streams'
 import type { Stream } from '~/services/twitch/models/Stream'
-import { getStreamsWithStreamers } from '~/services/twitch/business.server'
+
+import { fetchFromOrigin } from '~/utils/fetchOrigin.server'
 
 import { Heading } from '~/ui/components/typograph'
 import { StreamCard } from '~/ui/components/stream-card'
@@ -13,17 +14,11 @@ type IndexLoaderData = {
   streams: Array<Stream>
 }
 
-export const loader: LoaderFunction = async () => {
-  const streams = await getStreamsWithStreamers()
+export const loader: LoaderFunction = async ({ request }) => {
+  const response = await fetchFromOrigin('twitch/streams', request)
+  const { streams }: TwitchStreamsResponse = await response.json()
 
-  return json<IndexLoaderData>(
-    { streams },
-    {
-      headers: {
-        'Cache-Control': 'public, max-age=60, s=maxage=60',
-      },
-    },
-  )
+  return { streams }
 }
 
 export default function Index() {
