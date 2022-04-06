@@ -1,3 +1,5 @@
+import { duration } from '~/utils/dates'
+
 export interface StreamDTO {
   id: string
   user_id: string
@@ -43,7 +45,7 @@ export class Stream {
     this.type = dto.type
     this.title = dto.title
     this.viewerCount = dto.viewer_count
-    this.startedAt = dto.started_at
+    this.startedAt = duration(dto.started_at)
     this.language = dto.language
     this.thumbnailUrl = dto.thumbnail_url
       .replace('{width}', '320')

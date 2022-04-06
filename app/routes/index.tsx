@@ -22,8 +22,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function Index() {
-  const { streams: initialStreams } = useLoaderData<IndexLoaderData>()
-  const streams = useStreamsData(initialStreams)
+  const data = useLoaderData<IndexLoaderData>()
+  const streams = useStreamsData(data.streams)
 
   return (
     <div>
