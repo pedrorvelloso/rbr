@@ -49,7 +49,9 @@ export const StreamCard = (stream: Stream) => {
           >
             {stream.userName}
           </Anchor>
-          <p className="text-[13px] text-neutral-400">{stream.gameName}</p>
+          <p className="text-[13px] text-neutral-400 whitespace-nowrap overflow-hidden text-ellipsis">
+            {stream.gameName}
+          </p>
         </span>
       </div>
     </article>
