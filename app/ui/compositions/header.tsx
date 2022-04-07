@@ -73,7 +73,12 @@ export const Header = () => {
         </div>
         <div className="lg:flex gap-x-4 hidden">
           {socials.map(({ icon: Icon, href }) => (
-            <Anchor target="_blank" href={href} key={href}>
+            <Anchor
+              target="_blank"
+              href={href}
+              key={href}
+              className="relative before:absolute before:-inset-[6px] hover:before:bg-white/10 before:-z-10 before:rounded z-20 hover:text-white"
+            >
               <Icon size={20} />
             </Anchor>
           ))}
