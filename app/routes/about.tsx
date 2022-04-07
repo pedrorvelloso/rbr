@@ -21,12 +21,12 @@ const AboutPage = () => {
         <Accordion title="O que é Randomizer?">
           <p>
             Randomizer é uma modificação de um jogo em que os itens são
-            dispostos de forma aleatória no jogo. Os itens são distribuídos
-            dentro de uma lógica que permite chegar ao objetivo final sem que
-            você fique travado, ou seja, todos os jogos randomizados gerados,
-            que chamamos de seed, possuem uma solução. Em casos de competição os
-            dois participantes jogam a mesma seed, que é normalmente
-            identificada por uma hash de identificação no início da partida.
+            dispostos de forma aleatória. Os itens são distribuídos dentro de
+            uma lógica que permite chegar ao objetivo final sem que você fique
+            travado, ou seja, todos os jogos randomizados gerados, que chamamos
+            de seed, possuem uma solução. Em casos de competição os dois
+            participantes jogam a mesma seed, que é normalmente identificada por
+            uma hash de identificação no início da partida.
           </p>
         </Accordion>
         <Accordion title="Quais são os jogos que possuem randomizers?">
