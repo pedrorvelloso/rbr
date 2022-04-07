@@ -11,6 +11,7 @@ import {
 } from '~/hooks/use-streams-data'
 
 import { Streams } from '~/ui/compositions/streams'
+import { Spinner } from '~/ui/components/spinner'
 
 type IndexLoaderData = {
   streams: Array<Stream>
@@ -36,10 +37,11 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const data = useLoaderData<IndexLoaderData>()
-  const { streams } = useStreamsData(data.streams)
+  const { streams, isLoading } = useStreamsData(data.streams)
 
   return (
     <div>
+      <Spinner isLoading={isLoading} />
       <Streams data={streams} />
     </div>
   )
