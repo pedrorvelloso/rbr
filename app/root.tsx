@@ -14,7 +14,7 @@ import { Layout } from './ui/compositions/layout'
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'RBR Streamers',
+  title: 'Randomizer Brasil',
   viewport: 'width=device-width,initial-scale=1',
 })
 
