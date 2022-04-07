@@ -47,12 +47,19 @@ export const links: LinksFunction = () => [
 ]
 
 export const loader: LoaderFunction = ({ request }) => {
-  return json<RootLoaderData>({
-    url: {
-      origin: getDomainUrl(request),
-      path: new URL(request.url).pathname,
+  return json<RootLoaderData>(
+    {
+      url: {
+        origin: getDomainUrl(request),
+        path: new URL(request.url).pathname,
+      },
     },
-  })
+    {
+      headers: {
+        'Cache-Control': 'max-age=365000000, immutable',
+      },
+    },
+  )
 }
 
 export default function App() {
