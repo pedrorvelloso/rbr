@@ -13,9 +13,14 @@ type IndexLoaderData = {
   updatedAt: string
 }
 
-export const headers: HeadersFunction = () => ({
-  'Cache-Control': 's-maxage=45, stale-while-revalidate=15',
-})
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  const headers = new Headers()
+  const controlCache = loaderHeaders.get('Cache-Control')
+
+  headers.set('Cache-Control', controlCache!)
+
+  return headers
+}
 
 export const loader: LoaderFunction = async () => {
   const streams = await getStreamsWithStreamers()
@@ -23,7 +28,7 @@ export const loader: LoaderFunction = async () => {
 
   return json<IndexLoaderData>(
     { streams, updatedAt },
-    { headers: { 'Cache-Control': 's-maxage=60' } },
+    { headers: { 'Cache-Control': 's-maxage=10' } },
   )
 }
 
