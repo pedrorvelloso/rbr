@@ -5,34 +5,49 @@ import { useLoaderData } from '@remix-run/react'
 import type { Stream } from '~/services/twitch/models/Stream'
 import { getStreamsWithStreamers } from '~/services/twitch/business.server'
 
+import {
+  useDataRevalidation,
+  REVALIDATION_SECONDS,
+} from '~/hooks/use-data-revalidation'
+import { useIsPathTransitioning } from '~/hooks/use-is-path-transitioning'
+
 import { Streams } from '~/ui/compositions/streams'
+import { Spinner } from '~/ui/components/spinner'
 
 type IndexLoaderData = {
   streams: Array<Stream>
-  updatedAt: string
 }
 
-export const headers: HeadersFunction = () => ({
-  'Cache-Control': 's-maxage=45, stale-while-revalidate=15',
-})
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  const headers = new Headers()
+  const controlCache = loaderHeaders.get('Cache-Control')
+
+  headers.set('Cache-Control', controlCache!)
+
+  return headers
+}
 
 export const loader: LoaderFunction = async () => {
   const streams = await getStreamsWithStreamers()
-  const updatedAt = new Date().toString()
 
   return json<IndexLoaderData>(
-    { streams, updatedAt },
-    { headers: { 'Cache-Control': 's-maxage=60' } },
+    { streams },
+    { headers: { 'Cache-Control': `s-maxage=${REVALIDATION_SECONDS}` } },
   )
 }
 
-export default function Index() {
+const IndexPage = () => {
   const data = useLoaderData<IndexLoaderData>()
+  const isLoading = useIsPathTransitioning()
+
+  useDataRevalidation()
 
   return (
     <div>
+      <Spinner isLoading={isLoading} />
       <Streams data={data.streams} />
-      <p>{data.updatedAt}</p>
     </div>
   )
 }
+
+export default IndexPage
