@@ -6,9 +6,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from '@remix-run/react'
 
 import tailwindCss from '~/styles/tailwind.css'
+import { Heading } from './ui/components/typograph'
 
 import { Layout } from './ui/compositions/layout'
 
@@ -32,6 +34,51 @@ export default function App() {
       <body className="bg-dark text-neutral-300">
         <Layout>
           <Outlet />
+        </Layout>
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  )
+}
+
+export const CatchBoundary = () => {
+  const caught = useCatch()
+
+  if (caught.status === 404) {
+    return (
+      <html lang="en">
+        <head>
+          <Links />
+        </head>
+        <body className="bg-dark text-neutral-300">
+          <Layout>
+            <Heading>Página não encontrada</Heading>
+            <p>
+              Essa página não vai carregar! Não adianta nem tentar randomizar
+              uma página.
+            </p>
+          </Layout>
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </body>
+      </html>
+    )
+  }
+}
+
+export const ErrorBoundary = () => {
+  return (
+    <html lang="en">
+      <head>
+        <Links />
+      </head>
+      <body className="bg-dark text-neutral-300">
+        <Layout>
+          <Heading>Algo de errado aconteceu</Heading>
+          <p>Se o erro persistir entre em contato com alguem no discord!</p>
         </Layout>
         <ScrollRestoration />
         <Scripts />
