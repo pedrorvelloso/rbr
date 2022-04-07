@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async () => {
   )
 }
 
-export default function Index() {
+const IndexPage = () => {
   const data = useLoaderData<IndexLoaderData>()
   const { streams, isLoading } = useStreamsData(data.streams)
 
@@ -46,3 +46,5 @@ export default function Index() {
     </div>
   )
 }
+
+export default IndexPage
