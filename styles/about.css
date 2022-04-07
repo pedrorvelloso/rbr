@@ -1,0 +1,8 @@
+p {
+  margin: 8px 0;
+}
+
+.game-list {
+  list-style: circle;
+  margin: 24px;
+}
