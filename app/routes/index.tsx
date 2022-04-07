@@ -6,9 +6,10 @@ import type { Stream } from '~/services/twitch/models/Stream'
 import { getStreamsWithStreamers } from '~/services/twitch/business.server'
 
 import {
-  useStreamsData,
-  RENOVATE_DELAY_SECONDS,
-} from '~/hooks/use-streams-data'
+  useDataRevalidation,
+  REVALIDATION_SECONDS,
+} from '~/hooks/use-data-revalidation'
+import { useIsPathTransitioning } from '~/hooks/use-is-path-transitioning'
 
 import { Streams } from '~/ui/compositions/streams'
 import { Spinner } from '~/ui/components/spinner'
@@ -31,18 +32,20 @@ export const loader: LoaderFunction = async () => {
 
   return json<IndexLoaderData>(
     { streams },
-    { headers: { 'Cache-Control': `s-maxage=${RENOVATE_DELAY_SECONDS}` } },
+    { headers: { 'Cache-Control': `s-maxage=${REVALIDATION_SECONDS}` } },
   )
 }
 
 const IndexPage = () => {
   const data = useLoaderData<IndexLoaderData>()
-  const { streams, isLoading } = useStreamsData(data.streams)
+  const isLoading = useIsPathTransitioning()
+
+  useDataRevalidation()
 
   return (
     <div>
       <Spinner isLoading={isLoading} />
-      <Streams data={streams} />
+      <Streams data={data.streams} />
     </div>
   )
 }
