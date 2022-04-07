@@ -1,4 +1,9 @@
-import type { MetaFunction, LinksFunction } from '@remix-run/node'
+import type {
+  MetaFunction,
+  LinksFunction,
+  LoaderFunction,
+} from '@remix-run/node'
+import { json } from '@remix-run/node'
 import {
   Links,
   LiveReload,
@@ -10,19 +15,45 @@ import {
 } from '@remix-run/react'
 
 import tailwindCss from '~/styles/tailwind.css'
-import { Heading } from './ui/components/typograph'
 
+import { getSeo } from './utils/seo'
+import { getDomainUrl, getUrl } from './utils/misc'
+
+import { Heading } from './ui/components/typograph'
 import { Layout } from './ui/compositions/layout'
 
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  title: 'Randomizer Brasil',
-  viewport: 'width=device-width,initial-scale=1',
-})
+export type RootLoaderData = {
+  url: {
+    origin: string
+    path: string
+  }
+}
+
+export const meta: MetaFunction = ({ data }) => {
+  const { url } = data as RootLoaderData
+
+  return {
+    ...getSeo({
+      keywords: 'Randomizer, Brasil, Rando, OoTR, MMR, ALLTPR',
+      url: getUrl(url),
+      origin: url.origin,
+    }),
+    charSet: 'utf-8',
+  }
+}
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: tailwindCss },
 ]
+
+export const loader: LoaderFunction = ({ request }) => {
+  return json<RootLoaderData>({
+    url: {
+      origin: getDomainUrl(request),
+      path: new URL(request.url).pathname,
+    },
+  })
+}
 
 export default function App() {
   return (
