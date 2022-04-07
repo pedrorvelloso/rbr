@@ -1,25 +1,28 @@
 import { useEffect } from 'react'
-import { useFetcher } from '@remix-run/react'
 
 import type { TwitchStreamsResponse } from '~/routes/twitch/streams'
 import type { Stream } from '~/services/twitch/models/Stream'
 
-export const RENOVATE_DELAY_SECONDS = 10 // 1 minute
+import { useRevalidate } from './use-revalidate'
+
+export const RENOVATE_DELAY_SECONDS = 60 // 1 minute
 
 export const useStreamsData = (initialData: Array<Stream>) => {
-  const fetcher = useFetcher<TwitchStreamsResponse>()
+  const { revalidate, state, data } = useRevalidate<TwitchStreamsResponse>()
 
   useEffect(() => {
     const renovateStreams = setInterval(
-      () => fetcher.submit({ method: 'get' }),
+      () => revalidate(),
       1000 * RENOVATE_DELAY_SECONDS,
     )
 
     return () => {
       clearInterval(renovateStreams)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [revalidate])
 
-  return fetcher.data?.streams || initialData
+  return {
+    streams: data?.streams || initialData,
+    isLoading: state === 'loading',
+  }
 }
