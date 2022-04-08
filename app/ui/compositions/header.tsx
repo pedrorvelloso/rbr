@@ -32,7 +32,10 @@ const socials = [
   },
 ]
 
-const NavButton: React.FC<{ href: string }> = ({ children, href }) => (
+const NavButton: React.FC<React.PropsWithChildren<{ href: string }>> = ({
+  children,
+  href,
+}) => (
   <Anchor
     href={href}
     isNav

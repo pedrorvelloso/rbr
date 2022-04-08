@@ -13,7 +13,7 @@ interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   size?: 'heading1' | 'heading2' | 'heading3'
 }
 
-export const Heading: React.FC<HeadingProps> = ({
+export const Heading: React.FC<React.PropsWithChildren<HeadingProps>> = ({
   size = 'heading1',
   className,
   children,
