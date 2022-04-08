@@ -88,6 +88,7 @@ export const CatchBoundary = () => {
     return (
       <html lang="en">
         <head>
+          <Meta />
           <Links />
         </head>
         <body className="bg-dark text-neutral-300">
@@ -111,6 +112,7 @@ export const ErrorBoundary = () => {
   return (
     <html lang="en">
       <head>
+        <Meta />
         <Links />
       </head>
       <body className="bg-dark text-neutral-300">
