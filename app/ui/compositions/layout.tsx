@@ -1,6 +1,8 @@
 import { Header } from './header'
 
-export const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <>
       <Header />

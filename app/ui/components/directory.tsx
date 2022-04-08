@@ -2,7 +2,10 @@ interface DirectoryProps {
   title: React.ReactNode
 }
 
-export const Directory: React.FC<DirectoryProps> = ({ children, title }) => {
+export const Directory: React.FC<React.PropsWithChildren<DirectoryProps>> = ({
+  children,
+  title,
+}) => {
   return (
     <section className="flex flex-col gap-y-4">
       {title}
