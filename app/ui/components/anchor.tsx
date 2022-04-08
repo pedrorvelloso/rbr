@@ -9,7 +9,7 @@ export interface AnchorProps {
   isNav?: boolean
 }
 
-export const Anchor: React.FC<AnchorProps> = ({
+export const Anchor: React.FC<React.PropsWithChildren<AnchorProps>> = ({
   href,
   className,
   prefetch,

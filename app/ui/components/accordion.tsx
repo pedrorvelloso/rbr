@@ -5,7 +5,10 @@ interface AccordionProps {
   title: string
 }
 
-export const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
+export const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
+  title,
+  children,
+}) => {
   return (
     <Disclosure>
       {({ open }) => (
