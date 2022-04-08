@@ -4,6 +4,8 @@ import { userList, gameList } from '~/utils/user-list'
 import { type HelixStreamsResponse, Stream } from './models/Stream'
 import { type HelixStreamersResponse, Streamer } from './models/Streamer'
 
+// fetch from twitch function
+// this function will apply tokens
 export const fetchTwitch = async (
   resource: string,
   options?: RequestInit | undefined,
@@ -52,6 +54,10 @@ export const getStreams = async (): Promise<Array<Stream>> => {
 }
 
 export const getStreamsWithStreamers = async (): Promise<Array<Stream>> => {
+  // for now we're not having more than 100 users
+  // when we reach that number we'll need to break down the
+  // user array into chunks and do multiple requests
+  // to fullfill all users
   const streams = await getStreams()
   const onlineStreamers = streams.map((stream) => stream.userId)
   const streamers =
