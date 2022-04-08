@@ -15,6 +15,8 @@ export const gameList = [
   '10081',
   // KH 2
   '4375',
+  // KH2 FM
+  '427286062',
   // KH 3
   '369585',
   // KH HD 1.5 + 2.5 ReMIX
