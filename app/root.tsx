@@ -30,6 +30,13 @@ export type RootLoaderData = {
 }
 
 export const meta: MetaFunction = ({ data }) => {
+  if (!data) {
+    return {
+      charSet: 'utf-8',
+      title: 'Página não Randomizada!',
+    }
+  }
+
   const { url } = data as RootLoaderData
 
   return {
@@ -88,6 +95,7 @@ export const CatchBoundary = () => {
     return (
       <html lang="en">
         <head>
+          <Meta />
           <Links />
         </head>
         <body className="bg-dark text-neutral-300">
@@ -111,6 +119,7 @@ export const ErrorBoundary = () => {
   return (
     <html lang="en">
       <head>
+        <Meta />
         <Links />
       </head>
       <body className="bg-dark text-neutral-300">
