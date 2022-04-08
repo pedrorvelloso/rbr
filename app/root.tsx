@@ -30,6 +30,13 @@ export type RootLoaderData = {
 }
 
 export const meta: MetaFunction = ({ data }) => {
+  if (!data) {
+    return {
+      charSet: 'utf-8',
+      title: 'Página não Randomizada!',
+    }
+  }
+
   const { url } = data as RootLoaderData
 
   return {
