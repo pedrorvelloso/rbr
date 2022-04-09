@@ -3,7 +3,11 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import type { Stream } from '~/services/twitch/models/Stream'
-import { getStreamsWithStreamers } from '~/services/twitch/business.server'
+import type { Vod } from '~/services/twitch/models/Vod'
+import {
+  getStreamsWithStreamers,
+  getVideos,
+} from '~/services/twitch/business.server'
 
 import {
   useDataRevalidation,
@@ -12,10 +16,12 @@ import {
 import { useIsPathTransitioning } from '~/hooks/use-is-path-transitioning'
 
 import { Streams } from '~/ui/compositions/streams'
+import { Vods } from '~/ui/compositions/vods'
 import { Spinner } from '~/ui/components/spinner'
 
 type IndexLoaderData = {
   streams: Array<Stream>
+  vods: Array<Vod>
 }
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -28,10 +34,13 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 }
 
 export const loader: LoaderFunction = async () => {
-  const streams = await getStreamsWithStreamers()
+  const [streams, vods] = await Promise.all([
+    getStreamsWithStreamers(),
+    getVideos('530941879'),
+  ])
 
   return json<IndexLoaderData>(
-    { streams },
+    { streams, vods },
     { headers: { 'Cache-Control': `s-maxage=${REVALIDATION_SECONDS}` } },
   )
 }
@@ -42,10 +51,13 @@ const IndexPage = () => {
 
   useDataRevalidation()
 
+  console.log(new Date(data.vods[0].publishedAt))
+
   return (
-    <div>
+    <div className="flex flex-col gap-y-12">
       <Spinner isLoading={isLoading} />
       <Streams data={data.streams} />
+      <Vods data={data.vods} />
     </div>
   )
 }

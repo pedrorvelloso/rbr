@@ -3,6 +3,7 @@ import { twitch } from '~/config/env'
 import { userList, gameList } from '~/utils/user-list'
 import { type HelixStreamsResponse, Stream } from './models/Stream'
 import { type HelixStreamersResponse, Streamer } from './models/Streamer'
+import { type HelixVodsResponse, Vod } from './models/Vod'
 
 // fetch from twitch function
 // this function will apply tokens
@@ -66,6 +67,20 @@ export const getStreamsWithStreamers = async (): Promise<Array<Stream>> => {
   return createStreamsUnionStreamers(streams, streamers)
 }
 
+export const getVideos = async (userId: string) => {
+  const [userParams, firstParams] = [
+    buildUrlParams('user_id', [userId]),
+    buildUrlParams('first', ['4']),
+  ]
+
+  const params = `?${userParams}&${firstParams}`
+
+  const response = await fetchTwitch(`videos${params}`)
+  const { data }: HelixVodsResponse = await response.json()
+
+  return createVodsResponse(data)
+}
+
 const createStreamsResponse = (data: HelixStreamsResponse['data']) =>
   data.map((dto) => new Stream(dto))
 
@@ -84,3 +99,6 @@ const createStreamsUnionStreamers = (
       streamers.find((streamer) => streamer.id === stream.userId)?.login ||
       stream.login,
   }))
+
+const createVodsResponse = (data: HelixVodsResponse['data']) =>
+  data.map((dto) => new Vod(dto))
