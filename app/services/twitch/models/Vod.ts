@@ -31,9 +31,11 @@ export class Vod {
     this.userLogin = dto.user_login
     this.title = dto.title
     this.url = dto.url
-    this.thumbnailUrl = dto.thumbnail_url
-      .replace('%{width}', '320')
-      .replace('%{height}', '180')
+    this.thumbnailUrl =
+      dto.thumbnail_url
+        .replace('%{width}', '320')
+        .replace('%{height}', '180') ||
+      'https://vod-secure.twitch.tv/_404/404_processing_320x180.png'
     this.viewCount = dto.view_count
     this.duration = dto.duration
     this.publishedAt = dto.published_at
