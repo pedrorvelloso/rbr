@@ -9,7 +9,7 @@ interface StreamsProps {
 }
 
 const NoOneOnline = () => (
-  <div className="flex justify-center items-center h-52 col-span-full italic text-neutral-400">
+  <div className="flex justify-center items-center h-72 col-span-full italic text-neutral-400">
     Ninguém on-line no momento
   </div>
 )

@@ -1,4 +1,5 @@
-import { intervalToDuration } from 'date-fns'
+import { format, intervalToDuration, parseISO } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
 export const duration = (date: string) => {
   const { hours, minutes } = intervalToDuration({
@@ -9,4 +10,8 @@ export const duration = (date: string) => {
   const mins = `00${minutes}`.slice(-2)
 
   return `${hours}:${mins}`
+}
+
+export const formatDate = (date: string) => {
+  return format(parseISO(date), 'PP', { locale: ptBR })
 }

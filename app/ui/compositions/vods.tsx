@@ -1,6 +1,8 @@
 import type { Vod } from '~/services/twitch/models/Vod'
-import { Anchor } from '../components/anchor'
 
+import { formatDate } from '~/utils/dates'
+
+import { Anchor } from '../components/anchor'
 import { Directory } from '../components/directory'
 import { Heading } from '../components/typograph'
 import { VideoCard } from '../components/video-card'
@@ -25,15 +27,24 @@ export const Vods = ({ data }: VodsProps) => {
           thumbnailUrl={vod.thumbnailUrl}
           key={vod.id}
         >
-          <Anchor href={vod.url} target="_blank" className="hover:text-primary">
-            <Heading
-              size="heading3"
-              className="whitespace-nowrap overflow-hidden text-ellipsis font-semibold"
-              title={vod.title}
+          <div className="flex flex-col gap-x-3">
+            <Anchor
+              href={vod.url}
+              target="_blank"
+              className="hover:text-primary"
             >
-              {vod.title}
-            </Heading>
-          </Anchor>
+              <Heading
+                size="heading3"
+                className="whitespace-nowrap overflow-hidden text-ellipsis font-semibold"
+                title={vod.title}
+              >
+                {vod.title}
+              </Heading>
+            </Anchor>
+            <p className="text-[13px] text-neutral-400">
+              {formatDate(vod.publishedAt)}
+            </p>
+          </div>
         </VideoCard>
       ))}
     </Directory>
