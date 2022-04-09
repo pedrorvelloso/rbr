@@ -19,7 +19,7 @@ export const Spinner = ({ isLoading }: SpinnerProps) => {
         <motion.div
           animate={{ rotateY: [180, -180] }}
           transition={{ duration: 1, repeatType: 'mirror', repeat: Infinity }}
-          className="w-fit text-yellow-600 text-4xl absolute bottom-3 right-3"
+          className="w-fit text-yellow-600 text-4xl fixed bottom-3 right-3 z-50"
         >
           <GiTriforce />
         </motion.div>
