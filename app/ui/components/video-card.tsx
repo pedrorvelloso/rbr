@@ -1,5 +1,6 @@
+import clsx from 'clsx'
 import React from 'react'
-import { IoTimeOutline } from 'react-icons/io5'
+import { IoTimeOutline, IoEyeOutline } from 'react-icons/io5'
 
 import { Anchor } from './anchor'
 
@@ -27,9 +28,21 @@ export const VideoCard: React.FC<React.PropsWithChildren<VideoCardProps>> = ({
         <p className="absolute bottom-0 z-20 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all mx-2 my-2 text-xs bg-black/90 px-1 rounded-sm flex items-center gap-x-1">
           <IoTimeOutline className="text-primary" /> {time}
         </p>
-        <p className="absolute bottom-0 right-0 z-20 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all mx-2 my-2 text-xs bg-black/90 px-1 rounded-sm flex items-center gap-x-1">
+        <p
+          className={clsx(
+            'absolute bottom-0 right-0 z-20 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all mx-2 my-2 text-xs bg-black/90 px-1 rounded-sm flex items-center gap-x-1',
+            {
+              'flex-row': showSpectatorsText,
+              'flex-row-reverse': !showSpectatorsText,
+            },
+          )}
+        >
           {viewCount}{' '}
-          {showSpectatorsText && <>espectador{viewCount > 1 && 'es'}</>}
+          {showSpectatorsText ? (
+            <>espectador{viewCount > 1 && 'es'}</>
+          ) : (
+            <IoEyeOutline className="text-primary" />
+          )}
         </p>
         <img
           src={thumbnailUrl}
