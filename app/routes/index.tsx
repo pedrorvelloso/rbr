@@ -2,6 +2,8 @@ import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
+import { format, parseISO } from 'date-fns'
+
 import type { Stream } from '~/services/twitch/models/Stream'
 import type { Vod } from '~/services/twitch/models/Vod'
 import {
@@ -51,7 +53,8 @@ const IndexPage = () => {
 
   useDataRevalidation()
 
-  console.log(new Date(data.vods[0].publishedAt))
+  console.log(format(parseISO(data.vods[0].publishedAt), 'PPpp'))
+  console.log(data.vods[0].publishedAt)
 
   return (
     <div className="flex flex-col gap-y-12">
