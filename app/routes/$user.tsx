@@ -6,13 +6,16 @@ import { userList } from '~/utils/user-list'
 import { Heading } from '~/ui/components/typograph'
 
 export const loader: LoaderFunction = ({ params }) => {
-  const isOnList = userList.find((user) => user === params.user)
+  const userParam = params.user
+
+  const isOnList =
+    userParam && userList.find((user) => user === userParam.toLowerCase())
 
   if (!isOnList) {
     throw json({ message: 'User not found' }, { status: 404 })
   }
 
-  return redirect(`https://twitch.tv/${params.user}`)
+  return redirect(`https://twitch.tv/${isOnList}`)
 }
 
 const User = () => {
