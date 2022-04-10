@@ -40,12 +40,12 @@ export const meta: MetaFunction = ({ data }) => {
   const { url } = data as RootLoaderData
 
   return {
+    charSet: 'utf-8',
     ...getSeo({
       keywords: 'Randomizer, Brasil, Rando, OoTR, MMR, ALLTPR',
       url: getUrl(url),
       origin: url.origin,
     }),
-    charSet: 'utf-8',
   }
 }
 

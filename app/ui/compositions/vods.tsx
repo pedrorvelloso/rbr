@@ -1,6 +1,8 @@
+import { ClientOnly } from 'remix-utils'
+
 import type { Vod } from '~/services/twitch/models/Vod'
 
-// import { formatDate } from '~/utils/dates'
+import { formatDate } from '~/utils/dates'
 
 import { Anchor } from '../components/anchor'
 import { Directory } from '../components/directory'
@@ -41,9 +43,18 @@ export const Vods = ({ data }: VodsProps) => {
                 {vod.title}
               </Heading>
             </Anchor>
-            {/* <p className="text-[13px] text-neutral-400">
-              {formatDate(vod.publishedAt)}
-            </p> */}
+            {/* client only date to prevent hydratation errors from the server. keep correct local date */}
+            <ClientOnly
+              fallback={
+                <div className="bg-gray-400/30 h-[13px] w-20 animate-pulse backdrop-blur-sm" />
+              }
+            >
+              {() => (
+                <p className="text-[13px] text-neutral-400">
+                  {formatDate(vod.publishedAt)}
+                </p>
+              )}
+            </ClientOnly>
           </div>
         </VideoCard>
       ))}
