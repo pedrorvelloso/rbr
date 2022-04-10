@@ -1,6 +1,6 @@
 import type { Vod } from '~/services/twitch/models/Vod'
 
-import { formatDate } from '~/utils/dates'
+// import { formatDate } from '~/utils/dates'
 
 import { Anchor } from '../components/anchor'
 import { Directory } from '../components/directory'
@@ -41,9 +41,9 @@ export const Vods = ({ data }: VodsProps) => {
                 {vod.title}
               </Heading>
             </Anchor>
-            <p className="text-[13px] text-neutral-400">
+            {/* <p className="text-[13px] text-neutral-400">
               {formatDate(vod.publishedAt)}
-            </p>
+            </p> */}
           </div>
         </VideoCard>
       ))}
