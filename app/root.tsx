@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type {
   MetaFunction,
   LinksFunction,
@@ -12,12 +13,14 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLocation,
 } from '@remix-run/react'
 
 import tailwindCss from '~/styles/tailwind.css'
 
 import { getSeo } from './utils/seo'
-import { getDomainUrl, getUrl } from './utils/misc'
+import { env, getDomainUrl, getUrl } from './utils/misc'
+import * as gtag from '~/utils/gtags'
 
 import { Heading } from './ui/components/typograph'
 import { Layout } from './ui/compositions/layout'
@@ -70,6 +73,12 @@ export const loader: LoaderFunction = ({ request }) => {
 }
 
 export default function App() {
+  const location = useLocation()
+
+  useEffect(() => {
+    gtag.pageview(location.pathname)
+  }, [location])
+
   return (
     <html lang="en">
       <head>
@@ -82,6 +91,14 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
+        {env('production') && (
+          <>
+            <script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+            />
+            <script id="gtag-init" src="/scripts/analytics" />
+          </>
+        )}
         <LiveReload />
       </body>
     </html>
