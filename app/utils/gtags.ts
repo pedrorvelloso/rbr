@@ -1,3 +1,5 @@
+import { env } from './misc'
+
 export const GA_TRACKING_ID = 'G-ZPP910KW28'
 
 declare global {
@@ -16,6 +18,11 @@ declare global {
  */
 export const pageview = (url: string) => {
   if (!window.gtag) {
+    if (env('production')) {
+      console.warn(
+        'window.gtag is not defined. This could mean your google anylatics script has not loaded on the page yet.',
+      )
+    }
     return
   }
   window.gtag('config', GA_TRACKING_ID, {
@@ -34,6 +41,11 @@ export const event = ({
   value,
 }: Record<string, string>) => {
   if (!window.gtag) {
+    if (env('production')) {
+      console.warn(
+        'window.gtag is not defined. This could mean your google anylatics script has not loaded on the page yet.',
+      )
+    }
     return
   }
   window.gtag('event', action, {
