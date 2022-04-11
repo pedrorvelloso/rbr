@@ -9,6 +9,10 @@ export const getEnv = (key: string, devValue = `${key}-dev`) => {
   return value
 }
 
+export const env = (enviroment: 'production' | 'development') => {
+  return process.env.NODE_ENV === enviroment
+}
+
 export const getOrigin = (url: string) => {
   const origin = new URL(url).origin
 
