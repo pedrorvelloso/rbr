@@ -53,7 +53,7 @@ export const meta: MetaFunction = ({ data }) => {
 }
 
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: tailwindCss },
+  { rel: 'stylesheet preload', href: tailwindCss, as: 'style' },
 ]
 
 export const loader: LoaderFunction = ({ request }) => {
