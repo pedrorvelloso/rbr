@@ -12,6 +12,6 @@ export const duration = (date: string) => {
   return `${hours}:${mins}`
 }
 
-export const formatDate = (date: string) => {
-  return format(parseISO(date), 'PP', { locale: ptBR })
+export const formatDate = (date: string, formatter = 'PP') => {
+  return format(parseISO(date), formatter, { locale: ptBR })
 }

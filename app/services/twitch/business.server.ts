@@ -1,4 +1,4 @@
-import { twitch } from '~/config/env'
+import { twitch } from '~/config/env.server'
 
 import { userList, gameList } from '~/utils/user-list'
 import { type HelixStreamsResponse, Stream } from './models/Stream'
