@@ -4,7 +4,7 @@ import { userList, gameList } from '~/utils/user-list'
 import { type HelixStreamsResponse, Stream } from './models/Stream'
 import { type HelixStreamersResponse, Streamer } from './models/Streamer'
 import { type HelixVodsResponse, Vod } from './models/Vod'
-import { isLongEnough } from './utils'
+import { isVodLongEnough } from './utils'
 
 // fetch from twitch function
 // this function will apply tokens
@@ -79,7 +79,7 @@ export const getVideos = async (userId: string) => {
   const response = await fetchTwitch(`videos${params}`)
   const { data }: HelixVodsResponse = await response.json()
 
-  const vods = data.filter((vod) => isLongEnough(vod.duration)).splice(0, 4)
+  const vods = data.filter((vod) => isVodLongEnough(vod.duration)).splice(0, 4)
 
   return createVodsResponse(vods)
 }

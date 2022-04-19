@@ -1,4 +1,4 @@
-export const isLongEnough = (length: string) => {
+export const isVodLongEnough = (length: string) => {
   const regex = /([0-8]{0,2}h)?([0-8]{0,2}m)/
   const timeRegex = length.match(regex)
 
