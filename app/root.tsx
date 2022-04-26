@@ -17,6 +17,7 @@ import {
 } from '@remix-run/react'
 
 import tailwindCss from '~/styles/tailwind.css'
+import noScriptCss from '~/styles/no-script.css'
 
 import { getSeo } from './utils/seo'
 import { env, getDomainUrl, getUrl } from './utils/misc'
@@ -84,6 +85,9 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <noscript>
+          <link rel="stylesheet" href={noScriptCss} />
+        </noscript>
       </head>
       <body className="bg-dark text-neutral-300">
         <Layout>
