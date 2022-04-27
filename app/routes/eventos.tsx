@@ -1,4 +1,4 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
@@ -13,10 +13,22 @@ type EventsPageLoaderData = {
   commonTimeZone: string
 }
 
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  const headers = new Headers()
+  const controlCache = loaderHeaders.get('Cache-Control')
+
+  headers.set('Cache-Control', controlCache!)
+
+  return headers
+}
+
 export const loader: LoaderFunction = async () => {
   const { events, commonTimeZone } = await getEvents()
 
-  return json<EventsPageLoaderData>({ events, commonTimeZone })
+  return json<EventsPageLoaderData>(
+    { events, commonTimeZone },
+    { headers: { 'Cache-Control': `s-maxage=120` } },
+  )
 }
 
 const EventsPage = () => {
