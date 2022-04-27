@@ -1,3 +1,5 @@
+import { vodDuration } from '../utils'
+
 export interface VodDTO {
   id: string
   user_id: string
@@ -37,7 +39,7 @@ export class Vod {
         .replace('%{height}', '180') ||
       'https://vod-secure.twitch.tv/_404/404_processing_320x180.png'
     this.viewCount = dto.view_count
-    this.duration = dto.duration
+    this.duration = vodDuration(dto.duration)
     this.publishedAt = dto.published_at
   }
 }

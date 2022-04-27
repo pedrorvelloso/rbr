@@ -1,9 +1,10 @@
-import { twitch } from '~/config/env'
+import { twitch } from '~/config/env.server'
 
 import { userList, gameList } from '~/utils/user-list'
 import { type HelixStreamsResponse, Stream } from './models/Stream'
 import { type HelixStreamersResponse, Streamer } from './models/Streamer'
 import { type HelixVodsResponse, Vod } from './models/Vod'
+import { isVodLongEnough } from './utils'
 
 // fetch from twitch function
 // this function will apply tokens
@@ -70,7 +71,7 @@ export const getStreamsWithStreamers = async (): Promise<Array<Stream>> => {
 export const getVideos = async (userId: string) => {
   const [userParams, firstParams] = [
     buildUrlParams('user_id', [userId]),
-    buildUrlParams('first', ['4']),
+    buildUrlParams('first', ['15']),
   ]
 
   const params = `?${userParams}&${firstParams}`
@@ -78,7 +79,9 @@ export const getVideos = async (userId: string) => {
   const response = await fetchTwitch(`videos${params}`)
   const { data }: HelixVodsResponse = await response.json()
 
-  return createVodsResponse(data)
+  const vods = data.filter((vod) => isVodLongEnough(vod.duration)).splice(0, 4)
+
+  return createVodsResponse(vods)
 }
 
 const createStreamsResponse = (data: HelixStreamsResponse['data']) =>
