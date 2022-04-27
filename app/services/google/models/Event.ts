@@ -22,8 +22,9 @@ export class CalendarEvent {
   timeZone: string
   description: string
   status: 'confirmed' | 'tentative' | 'cancelled'
-  start: Date
-  serverDefaultStart: string
+  start: string
+  serverStartTime: string
+  dateTime: string
 
   constructor(event: EventDTO) {
     this.id = event.id
@@ -33,13 +34,12 @@ export class CalendarEvent {
     // since this is a brazil based calendar we can default to sao paulo
     // if it comes empty from the request
     this.timeZone = event.start?.timeZone ?? 'America/Sao_Paulo'
-    this.start = new Date(event.start?.dateTime || '')
+    // create date and convert to ISO date so we can convert in
+    // client side
+    this.start = new Date(event.start?.dateTime || '').toISOString()
     // this assures we can fallback to default calendar timezone
     // if client cannot convert to user timezone
-    this.serverDefaultStart = formatTz(
-      this.start.toISOString(),
-      'Pp',
-      this.timeZone,
-    )
+    this.serverStartTime = formatTz(this.start, 'Pp', this.timeZone)
+    this.dateTime = event.start?.dateTime || ''
   }
 }
