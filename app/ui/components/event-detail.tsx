@@ -24,7 +24,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({
   dateTime,
 }) => {
   return (
-    <div className="flex gap-3 min-w-0 items-center">
+    <div className="flex gap-3">
       <ClientOnly
         fallback={<Time time={serverStartTime} dateTime={dateTime} />}
       >
@@ -32,9 +32,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({
           <Time time={formatDate(startTime, 'HH:mm')} dateTime={dateTime} />
         )}
       </ClientOnly>
-      <span className="text-ellipsis overflow-hidden whitespace-nowrap">
-        {summary}
-      </span>
+      <span>{summary}</span>
     </div>
   )
 }
