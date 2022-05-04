@@ -9,11 +9,14 @@ export type GroupedEvent = {
 
 export const groupEvents = (
   events: Array<CalendarEvent>,
+  useStartTime = false,
 ): Array<GroupedEvent> => {
   const groups: { [key: string]: Array<CalendarEvent> } = events.reduce<{
     [key: string]: Array<CalendarEvent>
   }>((groups, event) => {
-    const date = event.start.split('T')[0]
+    const date = useStartTime
+      ? event.start.split('T')[0]
+      : event.dateTime.split('T')[0]
     if (!groups[date]) {
       groups[date] = []
     }

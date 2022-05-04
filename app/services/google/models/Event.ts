@@ -1,4 +1,3 @@
-import { formatISO } from 'date-fns'
 import { formatTz } from '~/utils/dates'
 
 export interface EventDTO {
@@ -37,9 +36,7 @@ export class CalendarEvent {
     this.timeZone = event.start?.timeZone ?? 'America/Sao_Paulo'
     // create date and convert to ISO date so we can convert in
     // client side
-    this.start = formatISO(new Date(event.start?.dateTime || ''), {
-      representation: 'complete',
-    })
+    this.start = new Date(event.start?.dateTime || '').toISOString()
     // this assures we can fallback to default calendar timezone
     // if client cannot convert to user timezone
     this.serverStartTime = formatTz(this.start, 'HH:mm', this.timeZone)

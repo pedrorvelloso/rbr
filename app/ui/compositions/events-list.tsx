@@ -26,7 +26,7 @@ export const EventsList: React.FC<EventsListProps> = ({
   useEffect(() => {
     if (hydrated) {
       const clientCastedDates = castEventsDate(events)
-      const clientGroupedEvents = groupEvents(clientCastedDates)
+      const clientGroupedEvents = groupEvents(clientCastedDates, true)
 
       setGroups(clientGroupedEvents)
     }
