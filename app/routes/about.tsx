@@ -18,7 +18,11 @@ const AboutPage = () => {
         </Heading>
       </header>
       <div className="flex flex-col gap-y-2">
-        <Accordion title="O que é Randomizer?">
+        <Accordion
+          title="O que é Randomizer?"
+          className="py-2 px-4"
+          buttonClassName="py-2 px-4"
+        >
           <p>
             Randomizer é uma modificação de um jogo em que os itens são
             dispostos de forma aleatória. Os itens são distribuídos dentro de
@@ -29,7 +33,11 @@ const AboutPage = () => {
             uma hash de identificação no início da partida.
           </p>
         </Accordion>
-        <Accordion title="Quais são os jogos que possuem randomizers?">
+        <Accordion
+          title="Quais são os jogos que possuem randomizers?"
+          className="py-2 px-4"
+          buttonClassName="py-2 px-4"
+        >
           <p>
             Hoje existem inúmeros jogos que tem a sua versão randomizer, porém
             elencar todos aqui ficaria inviável e monótono, com isso listaremos
@@ -64,7 +72,11 @@ const AboutPage = () => {
             lista completa e atualizada.
           </p>
         </Accordion>
-        <Accordion title="Jogando o Randomizer">
+        <Accordion
+          title="Jogando o Randomizer"
+          className="py-2 px-4"
+          buttonClassName="py-2 px-4"
+        >
           <p>
             Cada randomizer possui a sua particularidade. Tanto no quesito de
             como gerar uma seed randomizada, como também no modo como se pode

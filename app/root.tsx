@@ -14,6 +14,7 @@ import {
   ScrollRestoration,
   useCatch,
   useLocation,
+  useTransition,
 } from '@remix-run/react'
 
 import tailwindCss from '~/styles/tailwind.css'
@@ -25,6 +26,7 @@ import * as gtag from '~/utils/gtags'
 
 import { Heading } from './ui/components/typograph'
 import { Layout } from './ui/compositions/layout'
+import { Spinner } from './ui/components/spinner'
 
 export type RootLoaderData = {
   url: {
@@ -75,6 +77,7 @@ export const loader: LoaderFunction = ({ request }) => {
 
 export default function App() {
   const location = useLocation()
+  const transition = useTransition()
 
   useEffect(() => {
     gtag.pageview(location.pathname)
@@ -92,6 +95,7 @@ export default function App() {
       <body className="bg-dark text-neutral-300">
         <Layout>
           <Outlet />
+          <Spinner isLoading={transition.state === 'loading'} />
         </Layout>
         <ScrollRestoration />
         <Scripts />

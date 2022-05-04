@@ -72,6 +72,9 @@ export const Header = () => {
             <li className="h-full relative">
               <NavButton href="/about">Sobre</NavButton>
             </li>
+            <li className="h-full relative">
+              <NavButton href="/eventos">Eventos</NavButton>
+            </li>
           </ul>
         </div>
         <div className="lg:flex gap-x-4 hidden">

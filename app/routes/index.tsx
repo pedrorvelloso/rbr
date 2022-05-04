@@ -13,11 +13,9 @@ import {
   useDataRevalidation,
   REVALIDATION_SECONDS,
 } from '~/hooks/use-data-revalidation'
-import { useIsPathTransitioning } from '~/hooks/use-is-path-transitioning'
 
 import { Streams } from '~/ui/compositions/streams'
 import { Vods } from '~/ui/compositions/vods'
-import { Spinner } from '~/ui/components/spinner'
 
 type IndexLoaderData = {
   streams: Array<Stream>
@@ -47,13 +45,11 @@ export const loader: LoaderFunction = async () => {
 
 const IndexPage = () => {
   const data = useLoaderData<IndexLoaderData>()
-  const isLoading = useIsPathTransitioning()
 
   useDataRevalidation()
 
   return (
     <div className="flex flex-col gap-y-12">
-      <Spinner isLoading={isLoading} />
       <Streams data={data.streams} />
       <Vods data={data.vods} />
     </div>

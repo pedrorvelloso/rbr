@@ -16,15 +16,15 @@ export const EventDetail: React.FC<EventDetailProps> = ({
   dateTime,
 }) => {
   return (
-    <time dateTime={dateTime} className="flex gap-3 min-w-0 items-center">
-      <span className="font-bold min-w-fit">
+    <div className="flex gap-3 min-w-0 items-center">
+      <time dateTime={dateTime} className="font-bold min-w-fit">
         <ClientOnly fallback={serverStartTime}>
-          {() => <>{formatDate(startTime, 'Pp')}</>}
+          {() => <>{formatDate(startTime, 'HH:mm')}</>}
         </ClientOnly>
-      </span>
+      </time>
       <span className="text-ellipsis overflow-hidden whitespace-nowrap">
         {summary}
       </span>
-    </time>
+    </div>
   )
 }

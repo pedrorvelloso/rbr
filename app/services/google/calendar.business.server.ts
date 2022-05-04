@@ -2,6 +2,7 @@ import { addDays, addHours } from 'date-fns'
 import { google } from '~/config/env.server'
 
 import { CalendarEvent, EventDTO, GoogleCalendarResponse } from './models/Event'
+import { groupEvents } from './utils'
 
 export const fetchGoogleCalendar = async <T>(
   resource: string,
@@ -40,9 +41,11 @@ export const getEvents = async () => {
   )
   const { items, timeZone } = response
 
-  const events = items.filter((event) => event.status === 'confirmed')
+  const eventsResponse = items.filter((event) => event.status === 'confirmed')
+  const events = createEventResponse(eventsResponse)
+  const groupedServerEvents = groupEvents(events)
 
-  return { events: createEventResponse(events), commonTimeZone: timeZone }
+  return { events, commonTimeZone: timeZone, groupedServerEvents }
 }
 
 export const createEventResponse = (data: Array<EventDTO>) => {

@@ -4,13 +4,15 @@ import { useLoaderData } from '@remix-run/react'
 
 import { getEvents } from '~/services/google/calendar.business.server'
 import type { CalendarEvent } from '~/services/google/models/Event'
+import type { GroupedEvent } from '~/services/google/utils'
 
-import { EventDetail } from '~/ui/components/event-detail'
 import { Heading } from '~/ui/components/typograph'
+import { EventsList } from '~/ui/compositions/events-list'
 
 type EventsPageLoaderData = {
   events: Array<CalendarEvent>
   commonTimeZone: string
+  groupedServerEvents: Array<GroupedEvent>
 }
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -23,10 +25,10 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 }
 
 export const loader: LoaderFunction = async () => {
-  const { events, commonTimeZone } = await getEvents()
+  const { events, commonTimeZone, groupedServerEvents } = await getEvents()
 
   return json<EventsPageLoaderData>(
-    { events, commonTimeZone },
+    { events, commonTimeZone, groupedServerEvents },
     { headers: { 'Cache-Control': `s-maxage=120` } },
   )
 }
@@ -52,18 +54,10 @@ const EventsPage = () => {
           {data.commonTimeZone}.
         </Heading>
       </header>
-      <ul>
-        {data.events.map((event) => (
-          <li className="odd:bg-white/5 even:bg-transparent p-3" key={event.id}>
-            <EventDetail
-              dateTime={event.dateTime}
-              serverStartTime={event.serverStartTime}
-              startTime={event.start}
-              summary={event.summary}
-            />
-          </li>
-        ))}
-      </ul>
+      <EventsList
+        events={data.events}
+        serverEvents={data.groupedServerEvents}
+      />
     </div>
   )
 }
