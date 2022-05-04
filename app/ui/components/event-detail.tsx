@@ -9,6 +9,14 @@ interface EventDetailProps {
   dateTime: string
 }
 
+const Time = ({ time, dateTime }: { time: string; dateTime: string }) => {
+  return (
+    <time dateTime={dateTime} className="font-bold min-w-fit">
+      {time}
+    </time>
+  )
+}
+
 export const EventDetail: React.FC<EventDetailProps> = ({
   serverStartTime,
   startTime,
@@ -17,11 +25,13 @@ export const EventDetail: React.FC<EventDetailProps> = ({
 }) => {
   return (
     <div className="flex gap-3 min-w-0 items-center">
-      <time dateTime={dateTime} className="font-bold min-w-fit">
-        <ClientOnly fallback={serverStartTime}>
-          {() => <>{formatDate(startTime, 'HH:mm')}</>}
-        </ClientOnly>
-      </time>
+      <ClientOnly
+        fallback={<Time time={serverStartTime} dateTime={dateTime} />}
+      >
+        {() => (
+          <Time time={formatDate(startTime, 'HH:mm')} dateTime={dateTime} />
+        )}
+      </ClientOnly>
       <span className="text-ellipsis overflow-hidden whitespace-nowrap">
         {summary}
       </span>
