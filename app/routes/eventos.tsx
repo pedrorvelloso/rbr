@@ -39,10 +39,8 @@ const EventsPage = () => {
   return (
     <div className="flex flex-col gap-4">
       <header className="flex flex-col gap-y-3">
-        <div className="flex gap-x-2 items-baseline">
-          <Heading className="font-bold">Eventos Previstos</Heading>
-          <Heading size="heading3">(nessa semana)</Heading>
-        </div>
+        <Heading className="font-bold -mb-2">Eventos Previstos</Heading>
+        <Heading size="heading3">(próxima semana)</Heading>
         <Heading size="heading3" className="text-neutral-400 noscript-hidden">
           Todas as datas e horários são fornecidos em seu fuso horário local.
         </Heading>

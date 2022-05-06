@@ -23,12 +23,12 @@ export const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
       {({ open }) => (
         <div
           className={clsx('flex flex-col', {
-            'border border-[#0b061c]': !removeBorder,
+            'border border-purple-850': !removeBorder,
           })}
         >
           <Disclosure.Button
             className={clsx(
-              'text-left flex items-center justify-between bg-[#0b061c]',
+              'text-left flex items-center justify-between bg-purple-850',
               buttonClassName,
             )}
           >

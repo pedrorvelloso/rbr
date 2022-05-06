@@ -92,7 +92,7 @@ export default function App() {
           <link rel="stylesheet" href={noScriptCss} />
         </noscript>
       </head>
-      <body className="bg-dark text-neutral-300">
+      <body className="bg-purple-900 text-neutral-300">
         <Layout>
           <Outlet />
           <Spinner isLoading={transition.state === 'loading'} />
@@ -123,7 +123,7 @@ export const CatchBoundary = () => {
           <Meta />
           <Links />
         </head>
-        <body className="bg-dark text-neutral-300">
+        <body className="bg-purple-900 text-neutral-300">
           <Layout>
             <Heading>Página não encontrada</Heading>
             <p>
@@ -147,7 +147,7 @@ export const ErrorBoundary = () => {
         <Meta />
         <Links />
       </head>
-      <body className="bg-dark text-neutral-300">
+      <body className="bg-purple-900 text-neutral-300">
         <Layout>
           <Heading>Algo de errado aconteceu</Heading>
           <p>Se o erro persistir entre em contato com alguem no discord!</p>

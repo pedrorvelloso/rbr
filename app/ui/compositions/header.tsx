@@ -1,41 +1,17 @@
+import { useEffect, useState } from 'react'
+import { useTransition } from '@remix-run/react'
+
+import { FaTimes, FaBars } from 'react-icons/fa'
 import clsx from 'clsx'
-import {
-  BsTwitch,
-  BsDiscord,
-  BsTwitter,
-  BsYoutube,
-  BsInstagram,
-} from 'react-icons/bs'
+
+import { socials, nav } from '~/utils/menu'
 
 import { Anchor } from '../components/anchor'
+import { Drawer } from '../components/drawer'
 
-const socials = [
-  {
-    icon: BsTwitch,
-    href: 'https://twitch.tv/randobrasil',
-  },
-  {
-    icon: BsDiscord,
-    href: 'https://discord.com/invite/KTAYuY8M4b',
-  },
-  {
-    icon: BsTwitter,
-    href: 'https://twitter.com/randobrasil',
-  },
-  {
-    icon: BsYoutube,
-    href: 'https://www.youtube.com/c/RandomizerBrasil',
-  },
-  {
-    icon: BsInstagram,
-    href: 'https://www.instagram.com/randobrasil/',
-  },
-]
-
-const NavButton: React.FC<React.PropsWithChildren<{ href: string }>> = ({
-  children,
-  href,
-}) => (
+const NavButton: React.FC<
+  React.PropsWithChildren<{ href: string; isMobile?: boolean }>
+> = ({ children, href, isMobile = false }) => (
   <Anchor
     href={href}
     isNav
@@ -44,8 +20,9 @@ const NavButton: React.FC<React.PropsWithChildren<{ href: string }>> = ({
         'font-semibold text-lg h-full flex items-center',
         'hover:text-primary',
         {
-          'after:absolute after:bottom-0 after:left-0 after:right-0 after:bg-primary after:h-[2px] text-primary':
-            isActive,
+          'text-primary': isActive,
+          'after:absolute after:bottom-0 after:left-0 after:right-0 after:bg-primary after:h-[2px]':
+            isActive && !isMobile,
         },
       )
     }
@@ -55,29 +32,64 @@ const NavButton: React.FC<React.PropsWithChildren<{ href: string }>> = ({
 )
 
 export const Header = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const transition = useTransition()
+
+  useEffect(() => {
+    if (transition.state === 'loading') setDrawerOpen(false)
+  }, [transition.state])
+
   return (
-    <nav className="bg-[#0b061c] h-14 shadow-sm shadow-[#05030d] relative">
-      <div className="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
-        <div className="h-full flex items-center gap-x-8">
-          <img
-            src="/images/rbr.png"
-            alt="Randomizer Brasil"
-            height={30}
-            width={28}
-          />
-          <ul className="flex gap-x-8 h-full">
-            <li className="h-full relative">
-              <NavButton href="/">Assistir</NavButton>
-            </li>
-            <li className="h-full relative">
-              <NavButton href="/about">Sobre</NavButton>
-            </li>
-            <li className="h-full relative">
-              <NavButton href="/eventos">Eventos</NavButton>
-            </li>
-          </ul>
+    <>
+      <nav className="bg-purple-850 h-14 shadow-sm shadow-[#05030d] relative z-30">
+        <div className="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
+          <div className="h-full flex items-center gap-x-8">
+            <button
+              type="button"
+              onClick={() => setDrawerOpen((prevState) => !prevState)}
+              className="inline lg:hidden noscript-hidden"
+            >
+              {drawerOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+            </button>
+            <img
+              src="/images/rbr.png"
+              alt="Randomizer Brasil"
+              height={30}
+              width={28}
+            />
+            <ul className="hidden lg:flex gap-x-8 h-full">
+              {nav.map((item) => (
+                <li className="h-full relative" key={item.label}>
+                  <NavButton href={item.href}>{item.label}</NavButton>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="hidden lg:flex gap-x-4">
+            {socials.map(({ icon: Icon, href }) => (
+              <Anchor
+                target="_blank"
+                href={href}
+                key={href}
+                className="relative before:absolute before:-inset-[6px] hover:before:bg-white/10 before:-z-10 before:rounded z-20 hover:text-white"
+              >
+                <Icon size={20} />
+              </Anchor>
+            ))}
+          </div>
         </div>
-        <div className="lg:flex gap-x-4 hidden">
+      </nav>
+      <Drawer isOpen={drawerOpen} className="px-8">
+        <ul className="flex flex-col gap-y-2">
+          {nav.map((item) => (
+            <li className="h-full relative" key={item.label}>
+              <NavButton href={item.href} isMobile>
+                {item.label}
+              </NavButton>
+            </li>
+          ))}
+        </ul>
+        <div className="flex gap-x-4 mt-8">
           {socials.map(({ icon: Icon, href }) => (
             <Anchor
               target="_blank"
@@ -89,7 +101,7 @@ export const Header = () => {
             </Anchor>
           ))}
         </div>
-      </div>
-    </nav>
+      </Drawer>
+    </>
   )
 }
