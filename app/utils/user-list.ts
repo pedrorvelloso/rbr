@@ -33,4 +33,6 @@ export const gameList = [
   '14543',
   // Retro
   '27284',
+  // La-Mulana
+  '20422',
 ]
