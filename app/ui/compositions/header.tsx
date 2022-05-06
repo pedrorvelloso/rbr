@@ -41,7 +41,7 @@ export const Header = () => {
 
   return (
     <>
-      <nav className="bg-[#0b061c] h-14 shadow-sm shadow-[#05030d] relative z-30">
+      <nav className="bg-purple-850 h-14 shadow-sm shadow-[#05030d] relative z-30">
         <div className="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
           <div className="h-full flex items-center gap-x-8">
             <button

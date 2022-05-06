@@ -37,7 +37,7 @@ export const Drawer: React.FC<React.PropsWithChildren<DrawerProps>> = ({
             duration: 0.15,
           }}
           className={clsx(
-            'overflow-x-hidden fixed top-0 pt-[87px] pb-20 h-screen w-screen visible lg:invisible bg-dark z-20 overflow-auto',
+            'overflow-x-hidden fixed top-0 pt-[87px] pb-20 h-screen w-screen visible lg:invisible bg-purple-900 z-20 overflow-auto',
             className,
           )}
         >
