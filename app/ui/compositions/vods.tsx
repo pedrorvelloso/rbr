@@ -1,6 +1,6 @@
 import { ClientOnly } from 'remix-utils'
 
-import type { Vod } from '~/services/twitch/models/Vod'
+import type { Vod } from '~/services/twitch/models'
 
 import { formatDate } from '~/utils/dates'
 

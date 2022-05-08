@@ -1,7 +1,8 @@
 import { addDays, addHours } from 'date-fns'
 import { google } from '~/config/env.server'
 
-import { CalendarEvent, EventDTO, GoogleCalendarResponse } from './models/Event'
+import { CalendarEvent } from './models'
+import type { EventDTO, GoogleCalendarResponse } from './dtos'
 import { groupEvents } from './utils'
 
 export const fetchGoogleCalendar = async <T>(

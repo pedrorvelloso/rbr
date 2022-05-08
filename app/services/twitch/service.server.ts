@@ -1,9 +1,14 @@
 import { twitch } from '~/config/env.server'
 
 import { userList, gameList } from '~/utils/user-list'
-import { type HelixStreamsResponse, Stream } from './models/Stream'
-import { type HelixStreamersResponse, Streamer } from './models/Streamer'
-import { type HelixVodsResponse, Vod } from './models/Vod'
+
+import { Stream, Streamer, Vod } from './models'
+import type {
+  HelixStreamersResponse,
+  HelixStreamsResponse,
+  HelixVodsResponse,
+} from './dtos'
+
 import { isVodLongEnough } from './utils'
 
 // fetch from twitch function

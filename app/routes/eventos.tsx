@@ -2,8 +2,8 @@ import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
-import { getEvents } from '~/services/google/calendar.business.server'
-import type { CalendarEvent } from '~/services/google/models/Event'
+import { getEvents } from '~/services/google/service.server'
+import type { CalendarEvent } from '~/services/google/models'
 import type { GroupedEvent } from '~/services/google/utils'
 
 import { Heading } from '~/ui/components/typograph'

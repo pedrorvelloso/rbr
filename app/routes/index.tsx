@@ -2,12 +2,12 @@ import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
-import type { Stream } from '~/services/twitch/models/Stream'
-import type { Vod } from '~/services/twitch/models/Vod'
+import type { Stream, Vod } from '~/services/twitch/models'
+
 import {
   getStreamsWithStreamers,
   getVideos,
-} from '~/services/twitch/business.server'
+} from '~/services/twitch/service.server'
 
 import {
   useDataRevalidation,

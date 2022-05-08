@@ -1,4 +1,4 @@
-import type { Stream } from '~/services/twitch/models/Stream'
+import type { Stream } from '~/services/twitch/models'
 
 import { Live } from '../components/live'
 import { StreamCard } from '../components/stream-card'

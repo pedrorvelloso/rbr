@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useHydrated } from 'remix-utils'
 
-import type { CalendarEvent } from '~/services/google/models/Event'
+import type { CalendarEvent } from '~/services/google/models'
 import {
   castEventsDate,
   type GroupedEvent,

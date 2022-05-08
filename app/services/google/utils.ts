@@ -1,6 +1,6 @@
 import { formatISO } from 'date-fns'
 import { formatDate } from '~/utils/dates'
-import { CalendarEvent } from './models/Event'
+import type { CalendarEvent } from './models'
 
 export type GroupedEvent = {
   date: string

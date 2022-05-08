@@ -1,4 +1,4 @@
-import type { Stream } from '~/services/twitch/models/Stream'
+import type { Stream } from '~/services/twitch/models'
 
 import { Anchor } from './anchor'
 import { Heading } from './typograph'

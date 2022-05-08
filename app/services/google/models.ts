@@ -1,20 +1,6 @@
 import { formatTz } from '~/utils/dates'
 
-export interface EventDTO {
-  id: string
-  summary: string
-  description: string
-  status: 'confirmed' | 'tentative' | 'cancelled'
-  start?: {
-    dateTime: string
-    timeZone: string
-  }
-}
-
-export interface GoogleCalendarResponse {
-  items: Array<EventDTO>
-  timeZone: string
-}
+import { EventDTO } from './dtos'
 
 export class CalendarEvent {
   id: string

@@ -1,7 +1,8 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { getStreamsWithStreamers } from '~/services/twitch/business.server'
-import { Stream } from '~/services/twitch/models/Stream'
+
+import type { Stream } from '~/services/twitch/models'
+import { getStreamsWithStreamers } from '~/services/twitch/service.server'
 
 export type TwitchStreamsResponse = {
   streams: Array<Stream>

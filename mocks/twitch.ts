@@ -3,10 +3,11 @@ import { rest } from 'msw'
 
 import { faker } from '@faker-js/faker'
 
-import type { HelixStreamsResponse } from '~/services/twitch/models/Stream'
-import type { HelixStreamersResponse } from '~/services/twitch/models/Streamer'
-import type { HelixVodsResponse } from '~/services/twitch/models/Vod'
-
+import type {
+  HelixStreamsResponse,
+  HelixStreamersResponse,
+  HelixVodsResponse,
+} from '~/services/twitch/dtos'
 import { twitch } from '~/config/env.server'
 
 const streamsCount = Array.from({ length: 4 }, (_, i) => i + 1)
