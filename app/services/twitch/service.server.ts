@@ -1,6 +1,7 @@
 import { twitch } from '~/config/env.server'
 
-import { userList, gameList } from '~/utils/user-list'
+import { userList, gameList } from '~/utils/resource-list'
+import { createRequest } from '~/utils/request.server'
 
 import { Stream, Streamer, Vod } from './models'
 import type {
@@ -11,51 +12,35 @@ import type {
 
 import { isVodLongEnough } from './utils'
 
-// fetch from twitch function
-// this function will apply tokens
-export const fetchTwitch = async (
-  resource: string,
-  options?: RequestInit | undefined,
-) => {
-  const headers = {
+const fetchTwitch = createRequest(twitch.apiUrl, {
+  headers: {
     'Client-ID': twitch.clientId,
     Authorization: `Bearer ${twitch.appAccessToken}`,
-  }
-
-  return fetch(`${twitch.apiUrl}/${resource}`, { ...options, headers })
-}
-
-const buildUrlParams = (key: string, values: Array<string>) => {
-  const params = new URLSearchParams()
-
-  values.forEach((value) => params.append(key, value))
-
-  return params.toString()
-}
+  },
+})
 
 export const getStreamers = async (usersOrId?: Array<string>, isId = false) => {
-  const loginParams = buildUrlParams(
-    isId ? 'id' : 'login',
-    usersOrId || userList,
-  )
-
-  const response = await fetchTwitch(`users?${loginParams}`)
-  const { data }: HelixStreamersResponse = await response.json()
+  const {
+    data: { data },
+  } = await fetchTwitch<HelixStreamersResponse>('users', {
+    params: {
+      [isId ? 'id' : 'login']: usersOrId || userList,
+    },
+  })
 
   return createStreamersResponse(data)
 }
 
 export const getStreams = async (): Promise<Array<Stream>> => {
-  const [userParams, gameParams, firstParams] = [
-    buildUrlParams('user_login', userList),
-    buildUrlParams('game_id', gameList),
-    buildUrlParams('first', ['100']),
-  ]
-
-  const params = `?${userParams}&${gameParams}&${firstParams}`
-
-  const response = await fetchTwitch(`streams${params}`)
-  const { data }: HelixStreamsResponse = await response.json()
+  const {
+    data: { data },
+  } = await fetchTwitch<HelixStreamsResponse>('streams', {
+    params: {
+      user_login: userList,
+      game_id: gameList,
+      first: '100',
+    },
+  })
 
   return createStreamsResponse(data)
 }
@@ -74,15 +59,14 @@ export const getStreamsWithStreamers = async (): Promise<Array<Stream>> => {
 }
 
 export const getVideos = async (userId: string) => {
-  const [userParams, firstParams] = [
-    buildUrlParams('user_id', [userId]),
-    buildUrlParams('first', ['15']),
-  ]
-
-  const params = `?${userParams}&${firstParams}`
-
-  const response = await fetchTwitch(`videos${params}`)
-  const { data }: HelixVodsResponse = await response.json()
+  const {
+    data: { data },
+  } = await fetchTwitch<HelixVodsResponse>('videos', {
+    params: {
+      user_id: userId,
+      first: '15',
+    },
+  })
 
   const vods = data.filter((vod) => isVodLongEnough(vod.duration)).splice(0, 4)
 

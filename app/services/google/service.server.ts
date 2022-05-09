@@ -1,26 +1,20 @@
 import { addDays, addHours } from 'date-fns'
 import { google } from '~/config/env.server'
 
+import { createRequest } from '~/utils/request.server'
+
 import { CalendarEvent } from './models'
 import type { EventDTO, GoogleCalendarResponse } from './dtos'
 import { groupEvents } from './utils'
 
-export const fetchGoogleCalendar = async <T>(
-  resource: string,
-  resourceParams?: URLSearchParams,
-) => {
-  const params = new URLSearchParams(resourceParams)
-  params.set('key', google.key)
-
-  const response = await fetch(
-    `${google.apiUrl}/calendar/${google.version}/calendars/${
-      google.calender.calendarId
-    }/${resource}?${params.toString()}`,
-  )
-  const data: T = await response.json()
-
-  return data
-}
+const fetchGoogleCalendar = createRequest(
+  `${google.apiUrl}/calendar/${google.version}/calendars/${google.calender.calendarId}`,
+  {
+    params: {
+      key: google.key,
+    },
+  },
+)
 
 export const getEvents = async () => {
   // current time minus 4 hours (try to keep active events in list)
@@ -28,19 +22,17 @@ export const getEvents = async () => {
   // next 5 days
   const timeMax = addDays(timeMin, 7)
 
-  const params = new URLSearchParams({
+  const params = {
     timeMin: timeMin.toISOString(),
     timeMax: timeMax.toISOString(),
     timeZone: 'America/Sao_Paulo',
     singleEvents: 'true',
     orderBy: 'startTime',
-  })
+  }
 
-  const response = await fetchGoogleCalendar<GoogleCalendarResponse>(
-    'events',
-    params,
-  )
-  const { items, timeZone } = response
+  const {
+    data: { items, timeZone },
+  } = await fetchGoogleCalendar<GoogleCalendarResponse>('events', { params })
 
   const eventsResponse = items.filter((event) => event.status === 'confirmed')
   const events = createEventResponse(eventsResponse)

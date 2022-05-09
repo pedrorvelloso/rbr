@@ -1,7 +1,7 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { redirect, json } from '@remix-run/node'
 
-import { userList } from '~/utils/user-list'
+import { userList } from '~/utils/resource-list'
 
 import { Heading } from '~/ui/components/typograph'
 

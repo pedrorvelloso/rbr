@@ -1,5 +1,5 @@
 import type { LoaderFunction } from '@remix-run/node'
-import { userList } from '~/utils/user-list'
+import { userList } from '~/utils/resource-list'
 
 export const loader: LoaderFunction = () => {
   // remove test user and stringify json
