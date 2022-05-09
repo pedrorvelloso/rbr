@@ -54,7 +54,7 @@ const mergeOptions = (
   const headers = { ...defaultOptions?.headers, ...options?.headers }
   const params = { ...defaultOptions?.params, ...options?.params }
 
-  return { headers, params }
+  return { ...defaultOptions, ...options, headers, params }
 }
 
 /**
