@@ -3,7 +3,7 @@ import { userList } from '~/utils/resource-list'
 
 export const loader: LoaderFunction = () => {
   // remove test user and stringify json
-  const string = JSON.stringify(userList.filter((user) => user !== 'ilherdev'))
+  const string = JSON.stringify(userList)
 
   return new Response(string, {
     headers: {
