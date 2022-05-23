@@ -1,4 +1,4 @@
-import type { RestHandler, MockedRequest, DefaultRequestBody } from 'msw'
+import type { RestHandler, MockedRequest } from 'msw'
 import { rest } from 'msw'
 
 import { faker } from '@faker-js/faker'
@@ -12,7 +12,7 @@ import { twitch } from '~/config/env.server'
 
 const streamsCount = Array.from({ length: 4 }, (_, i) => i + 1)
 
-const twitchHandlers: Array<RestHandler<MockedRequest<DefaultRequestBody>>> = [
+const twitchHandlers: Array<RestHandler<MockedRequest>> = [
   rest.get(`${twitch.apiUrl}/streams`, (_req, res, ctx) => {
     const data: HelixStreamsResponse['data'] = streamsCount.map((i) => ({
       id: i.toString(),
