@@ -1,0 +1,13 @@
+overwrite: true
+schema:
+  - ${GCMS_URL}
+documents: 'app/**/*.{ts,tsx,gql,graphql}'
+generates:
+  app/generated/types.ts:
+    config:
+      avoidOptionals: true
+      useImplementingTypes: true
+      useTypeImports: true
+    plugins:
+      - typescript
+      - typescript-operations

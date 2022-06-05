@@ -4,6 +4,7 @@ interface RequestOptions {
   method?: 'get' | 'post' | 'put' | 'delete' | 'head' | 'options' | 'patch'
   headers?: HeadersInit
   params?: RequestParamsInit
+  body?: BodyInit
 }
 
 const buildUrlParams = (params: RequestParamsInit) => {
@@ -32,11 +33,10 @@ export const request = async <T = any>(
 ) => {
   const fetchUrl = `${url}${
     options?.params ? `?${buildUrlParams(options.params)}` : ''
-  }`
+  }`.replace(/\/$/, '')
 
   const response = await fetch(fetchUrl, {
-    method: options?.method,
-    headers: options?.headers,
+    ...options,
   })
 
   const data: T = await response.json()
@@ -52,7 +52,10 @@ const mergeOptions = (
   if (!options) return defaultOptions
 
   const headers = { ...defaultOptions?.headers, ...options?.headers }
-  const params = { ...defaultOptions?.params, ...options?.params }
+  const params =
+    defaultOptions?.params || options?.params
+      ? { ...defaultOptions?.params, ...options?.params }
+      : undefined
 
   return { ...defaultOptions, ...options, headers, params }
 }

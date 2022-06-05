@@ -14,3 +14,8 @@ export const google = {
     calendarId: getEnv('GOOGLE_CALENDAR_ID'),
   },
 }
+
+export const graphcms = {
+  apiUrl: getEnv('GCMS_URL'),
+  token: getEnv('GCMS_TOKEN'),
+}
