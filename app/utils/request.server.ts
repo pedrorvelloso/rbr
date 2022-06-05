@@ -1,3 +1,5 @@
+import type { GraphQLRequestBody, GraphQLResponse } from './graphql'
+
 type RequestParamsInit = Record<string, string | Array<string>>
 
 interface RequestOptions {
@@ -81,4 +83,31 @@ export const createRequest = (
       `${baseUrl}/${url.replace(/^\/$/g, '')}`,
       mergeOptions(defaultOptions, options),
     )
+}
+
+export const createGraphQLRequest = (
+  baseUrl: string,
+  defaultOptions?: RequestOptions,
+) => {
+  const graphqlRequest = createRequest(baseUrl, {
+    ...defaultOptions,
+  })
+
+  const requestGraphQL = async <T = any>(
+    query: string,
+    variables?: Record<string, any>,
+  ) => {
+    const body: GraphQLRequestBody = { query }
+
+    if (variables) body.variables = variables
+
+    const { data } = await graphqlRequest<GraphQLResponse<T>>('/', {
+      method: 'post',
+      body: JSON.stringify(body),
+    })
+
+    return data
+  }
+
+  return requestGraphQL
 }
