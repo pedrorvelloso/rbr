@@ -13,7 +13,7 @@ import { EventDetail } from '../components/event-detail'
 
 interface EventsListProps {
   events: Array<CalendarEvent>
-  serverEvents: Array<GroupedEvent>
+  serverEvents: Array<GroupedEvent<CalendarEvent>>
 }
 
 export const EventsList: React.FC<EventsListProps> = ({

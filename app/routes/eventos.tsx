@@ -12,7 +12,7 @@ import { EventsList } from '~/ui/compositions/events-list'
 type EventsPageLoaderData = {
   events: Array<CalendarEvent>
   commonTimeZone: string
-  groupedServerEvents: Array<GroupedEvent>
+  groupedServerEvents: Array<GroupedEvent<CalendarEvent>>
 }
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
