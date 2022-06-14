@@ -31,6 +31,8 @@ export const gameList = [
   '13050',
   // Pkm Crystal
   '14543',
+  // Pkm FR/LG
+  '13332',
   // Retro
   '27284',
   // La-Mulana
