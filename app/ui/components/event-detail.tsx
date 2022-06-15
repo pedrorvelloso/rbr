@@ -5,7 +5,7 @@ import { formatDate } from '~/utils/dates'
 interface EventDetailProps {
   serverStartTime: string
   startTime: string
-  summary: string
+  summary: React.ReactNode
   dateTime: string
 }
 
@@ -32,7 +32,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({
           <Time time={formatDate(startTime, 'HH:mm')} dateTime={dateTime} />
         )}
       </ClientOnly>
-      <span>{summary}</span>
+      {summary}
     </div>
   )
 }

@@ -1,8 +1,9 @@
+import { DateItem } from '~/models/DateItem'
 import { formatTz } from '~/utils/dates'
 
 import { EventDTO } from './dtos'
 
-export class CalendarEvent {
+export class CalendarEvent implements DateItem {
   id: string
   summary: string
   timeZone: string

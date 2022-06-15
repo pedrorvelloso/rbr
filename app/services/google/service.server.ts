@@ -2,10 +2,10 @@ import { addDays, addHours } from 'date-fns'
 import { google } from '~/config/env.server'
 
 import { createRequest } from '~/utils/request.server'
+import { groupEvents } from '~/utils/events'
 
 import { CalendarEvent } from './models'
 import type { EventDTO, GoogleCalendarResponse } from './dtos'
-import { groupEvents } from './utils'
 
 const fetchGoogleCalendar = createRequest(
   `${google.apiUrl}/calendar/${google.version}/calendars/${google.calender.calendarId}`,

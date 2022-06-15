@@ -1,18 +1,18 @@
 import { formatISO } from 'date-fns'
+import { DateItem } from '~/models/DateItem'
 import { formatDate } from '~/utils/dates'
-import type { CalendarEvent } from './models'
 
-export type GroupedEvent = {
+export type GroupedEvent<T extends DateItem> = {
   date: string
-  events: Array<CalendarEvent>
+  events: Array<T>
 }
 
-export const groupEvents = (
-  events: Array<CalendarEvent>,
+export const groupEvents = <T extends DateItem>(
+  events: Array<T>,
   useStartTime = false,
-): Array<GroupedEvent> => {
-  const groups: { [key: string]: Array<CalendarEvent> } = events.reduce<{
-    [key: string]: Array<CalendarEvent>
+): Array<GroupedEvent<T>> => {
+  const groups: { [key: string]: Array<T> } = events.reduce<{
+    [key: string]: Array<T>
   }>((groups, event) => {
     const date = useStartTime
       ? event.start.split('T')[0]
@@ -34,9 +34,9 @@ export const groupEvents = (
   return groupArrays
 }
 
-export const castEventsDate = (
-  events: Array<CalendarEvent>,
-): Array<CalendarEvent> => {
+export const castEventsDate = <T extends DateItem>(
+  events: Array<T>,
+): Array<T> => {
   return events.map((event) => ({
     ...event,
     start: formatISO(new Date(event.start), { representation: 'complete' }),
