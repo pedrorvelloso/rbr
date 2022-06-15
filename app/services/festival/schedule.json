@@ -1,6 +1,6 @@
 {
   "meta": {
-    "exported": "2022-06-15T05:26:56Z",
+    "exported": "2022-06-15T23:21:11Z",
     "api": "This is a living document and may change over time. For a stable, well-defined output, use the API instead.",
     "api-link": "/-/api/v1/schedules/1611ege0ii91c67aee"
   },
@@ -19,7 +19,7 @@
     "setup_t": 600,
     "theme": "darkly",
     "secret": null,
-    "updated": "2022-06-15T05:25:21Z",
+    "updated": "2022-06-15T23:19:49Z",
     "url": "/festivalrando/agenda",
     "event": {
       "id": "7050gj60wh606vb4fc",
@@ -90,7 +90,11 @@
         "length_t": 7200,
         "scheduled": "2022-06-16T14:45:00-03:00",
         "scheduled_t": 1655401500,
-        "data": ["ALTTP vs OoT", "Triforce Hunt", "Tso15 vs Furlim"]
+        "data": [
+          "Pokemon FireRed/LeafGreen",
+          "Kaizo Ironmon - Brock%",
+          "Tso15 vs Furlim"
+        ]
       },
       {
         "length": "PT3H",
@@ -345,11 +349,7 @@
         "length_t": 7200,
         "scheduled": "2022-06-19T14:00:00-03:00",
         "scheduled_t": 1655658000,
-        "data": [
-          "Pokemon FireRed/LeafGreen",
-          "Kaizo Ironmon - Brock%",
-          "Tso15 vs Furlim"
-        ]
+        "data": ["ALTTP vs OoT", "Triforce Hunt", "Tso15 vs Furlim"]
       },
       {
         "length": "PT1H30M",
