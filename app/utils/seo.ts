@@ -1,3 +1,6 @@
+import type { RootLoaderData } from '~/root'
+import { getUrl } from './misc'
+
 interface GetSeoOptions {
   title?: string
   description?: string
@@ -40,4 +43,22 @@ interface GetSeoImageOptions {
 
 export const getSeoImage = ({ origin }: GetSeoImageOptions) => {
   return `${origin}/images/social-rbr.png`
+}
+
+interface GetPageSeoOptions {
+  parentsData: any
+  seo: Partial<GetSeoOptions>
+}
+
+export const getPageSeo = ({ parentsData, seo }: GetPageSeoOptions) => {
+  const { url } = parentsData.root as RootLoaderData
+
+  return {
+    ...getSeo({
+      ...seo,
+      title: seo.title ? seo.title : undefined,
+      origin: url.origin,
+      url: getUrl({ origin: url.origin, path: url.path }),
+    }),
+  }
 }

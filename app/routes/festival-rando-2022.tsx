@@ -1,4 +1,4 @@
-import { json, type LoaderFunction } from '@remix-run/node'
+import { json, type LoaderFunction, type MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import type { ScheduleItem } from '~/services/festival/models'
@@ -9,6 +9,14 @@ import { EventDetail } from '~/ui/components/event-detail'
 import { EventsList } from '~/ui/compositions/events-list'
 
 import type { GroupedEvent } from '~/utils/events'
+import { getPageSeo } from '~/utils/seo'
+import { Anchor } from '~/ui/components/anchor'
+
+export const meta: MetaFunction = ({ parentsData }) =>
+  getPageSeo({
+    parentsData,
+    seo: { description: 'Assista ao Evento Festival Rando 2022!' },
+  })
 
 type FestivalRando2022PageLoaderData = {
   events: Array<ScheduleItem>
@@ -29,6 +37,16 @@ const FestivalRando2022Page = () => {
     <div className="flex flex-col gap-4">
       <header className="flex flex-col gap-y-3">
         <Heading className="font-bold -mb-2">Festival Rando 2022</Heading>
+        <Heading size="heading3">
+          Assista em{' '}
+          <Anchor
+            href="https://twitch.tv/randobrasil"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            https://twitch.tv/randobrasil
+          </Anchor>
+        </Heading>
         <Heading size="heading3" className="text-neutral-400 noscript-hidden">
           Todas as datas e horários são fornecidos em seu fuso horário local.
         </Heading>
