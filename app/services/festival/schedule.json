@@ -1,6 +1,6 @@
 {
   "meta": {
-    "exported": "2022-06-14T20:32:08Z",
+    "exported": "2022-06-15T05:26:56Z",
     "api": "This is a living document and may change over time. For a stable, well-defined output, use the API instead.",
     "api-link": "/-/api/v1/schedules/1611ege0ii91c67aee"
   },
@@ -9,8 +9,8 @@
     "name": "Faistevl Raodimnzer",
     "slug": "agenda",
     "timezone": "America/Sao_Paulo",
-    "start": "2022-06-15T14:00:00-03:00",
-    "start_t": 1655312400,
+    "start": "2022-06-15T19:45:00-03:00",
+    "start_t": 1655333100,
     "website": "https://randomizerbrasil.com.br/",
     "twitter": "randobrasil",
     "twitch": "randobrasil",
@@ -19,7 +19,7 @@
     "setup_t": 600,
     "theme": "darkly",
     "secret": null,
-    "updated": "2022-06-14T08:16:46Z",
+    "updated": "2022-06-15T05:25:21Z",
     "url": "/festivalrando/agenda",
     "event": {
       "id": "7050gj60wh606vb4fc",
@@ -32,29 +32,22 @@
     "columns": ["Jogo", "Description", "Runner"],
     "items": [
       {
-        "length": "PT1H30M",
-        "length_t": 5400,
-        "scheduled": "2022-06-15T14:00:00-03:00",
-        "scheduled_t": 1655312400,
-        "data": [
-          "Torneio KH2",
-          "Jogo 1 - Rodada 1",
-          "Gusxandi vs TsunamiHisoka"
-        ]
-      },
-      {
-        "length": "PT4H10M",
-        "length_t": 15000,
-        "scheduled": "2022-06-15T15:40:00-03:00",
-        "scheduled_t": 1655318400,
-        "data": ["Sofá", "Ciesta%", "@everyone"]
+        "length": "PT05M",
+        "length_t": 300,
+        "scheduled": "2022-06-15T19:45:00-03:00",
+        "scheduled_t": 1655333100,
+        "data": ["PRÉ-FESTIVAL", "PRÉ-FESTIVAL", "PRÉ-FESTIVAL"]
       },
       {
         "length": "PT1H30M",
         "length_t": 5400,
         "scheduled": "2022-06-15T20:00:00-03:00",
         "scheduled_t": 1655334000,
-        "data": ["Torneio KH2", "Jogo 2 - Rodada 2", "Ronaldo vs Roenmaru"]
+        "data": [
+          "Torneio KH2",
+          "Jogo 1 - Rodada 1 / Jogo 2 - Rodada 2",
+          "Gusxandi vs Tsunami_Hisoka / chaserdk vs Roenmaru"
+        ]
       },
       {
         "length": "PT11H10M",
@@ -104,7 +97,7 @@
         "length_t": 10800,
         "scheduled": "2022-06-16T16:55:00-03:00",
         "scheduled_t": 1655409300,
-        "data": ["Hollow Knight", "Standard", "SigZero vs Omega"]
+        "data": ["Hollow Knight", "Standard", "SigZero vs OmegaCanfora"]
       },
       {
         "length": "PT30M",
@@ -182,7 +175,7 @@
         "data": [
           "Torneio SMW 11-exit",
           "Jogo 4",
-          "Jair_Gam3r vs Jorge_Capivara"
+          "JairGamer40 vs Jorge__Capivara"
         ]
       },
       {
@@ -201,7 +194,7 @@
         "length_t": 2400,
         "scheduled": "2022-06-17T15:50:00-03:00",
         "scheduled_t": 1655491800,
-        "data": ["Goof Troop", "Standard", "Narti vs thugkjj vs BeaRType"]
+        "data": ["Goof Troop", "Standard", "Narti_ vs thugkjj vs BeaRType"]
       },
       {
         "length": "PT1H30M",
@@ -219,7 +212,7 @@
         "length_t": 8100,
         "scheduled": "2022-06-17T18:20:00-03:00",
         "scheduled_t": 1655500800,
-        "data": ["Minish Cap", "ZRBR Settings", "Icenine vs LunaValkyr"]
+        "data": ["Minish Cap", "ZRBR Settings", "IcenineTM vs LunaValkyr"]
       },
       {
         "length": "PT2H30M",
@@ -286,7 +279,7 @@
         "data": [
           "Factorio + Timespinner + OoT + ALTTP",
           "Archipelago Multiworld",
-          "MirageIW, Roenmaru, GabrielCampos, Kaiser"
+          "MirageIW, Roenmaru, GabrielJCampos, Kaiser"
         ]
       },
       {

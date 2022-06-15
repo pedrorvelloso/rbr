@@ -4,10 +4,11 @@ import { useLoaderData } from '@remix-run/react'
 
 import { getEvents } from '~/services/google/service.server'
 import type { CalendarEvent } from '~/services/google/models'
-import type { GroupedEvent } from '~/services/google/utils'
+import type { GroupedEvent } from '~/utils/events'
 
 import { Heading } from '~/ui/components/typograph'
 import { EventsList } from '~/ui/compositions/events-list'
+import { EventDetail } from '~/ui/components/event-detail'
 
 type EventsPageLoaderData = {
   events: Array<CalendarEvent>
@@ -55,6 +56,14 @@ const EventsPage = () => {
       <EventsList
         events={data.events}
         serverEvents={data.groupedServerEvents}
+        renderDetail={(event) => (
+          <EventDetail
+            dateTime={event.dateTime}
+            serverStartTime={event.serverStartTime}
+            startTime={event.start}
+            summary={<span>{event.summary}</span>}
+          />
+        )}
       />
     </div>
   )

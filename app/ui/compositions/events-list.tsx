@@ -1,25 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useHydrated } from 'remix-utils'
 
-import type { CalendarEvent } from '~/services/google/models'
-import {
-  castEventsDate,
-  type GroupedEvent,
-  groupEvents,
-} from '~/services/google/utils'
+import { castEventsDate, type GroupedEvent, groupEvents } from '~/utils/events'
+import type { DateItem } from '~/models/DateItem'
 
 import { Accordion } from '../components/accordion'
-import { EventDetail } from '../components/event-detail'
 
-interface EventsListProps {
-  events: Array<CalendarEvent>
-  serverEvents: Array<GroupedEvent<CalendarEvent>>
+interface EventsListProps<T extends DateItem & { id: string }> {
+  events: Array<T>
+  serverEvents: Array<GroupedEvent<T>>
+  renderDetail(event: T): React.ReactNode
 }
 
-export const EventsList: React.FC<EventsListProps> = ({
+export const EventsList = <Events extends DateItem & { id: string }>({
   events,
   serverEvents,
-}) => {
+  renderDetail,
+}: EventsListProps<Events>) => {
   const [groups, setGroups] = useState(serverEvents)
   const hydrated = useHydrated()
 
@@ -49,12 +46,7 @@ export const EventsList: React.FC<EventsListProps> = ({
                   className="odd:bg-white/5 even:bg-transparent p-3"
                   key={event.id}
                 >
-                  <EventDetail
-                    dateTime={event.dateTime}
-                    serverStartTime={event.serverStartTime}
-                    startTime={event.start}
-                    summary={event.summary}
-                  />
+                  {renderDetail(event)}
                 </li>
               ))}
             </ul>

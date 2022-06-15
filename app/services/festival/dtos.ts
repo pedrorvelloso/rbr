@@ -3,7 +3,7 @@ export interface ItemDTO {
   length_t: number
   scheduled: string
   scheduled_t: number
-  data: Array<string>
+  data: (string | null)[]
 }
 
 export interface ScheduleDTO {
