@@ -1,10 +1,11 @@
-import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
+import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import { getEvents } from '~/services/google/service.server'
 import type { CalendarEvent } from '~/services/google/models'
 import type { GroupedEvent } from '~/utils/events'
+import { getHeaders } from '~/utils/headers'
 
 import { Heading } from '~/ui/components/typograph'
 import { EventsList } from '~/ui/compositions/events-list'
@@ -16,14 +17,7 @@ type EventsPageLoaderData = {
   groupedServerEvents: Array<GroupedEvent<CalendarEvent>>
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
-  const headers = new Headers()
-  const controlCache = loaderHeaders.get('Cache-Control')
-
-  headers.set('Cache-Control', controlCache!)
-
-  return headers
-}
+export const headers = getHeaders
 
 export const loader: LoaderFunction = async () => {
   const { events, commonTimeZone, groupedServerEvents } = await getEvents()

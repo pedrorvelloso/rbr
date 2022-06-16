@@ -12,5 +12,6 @@ export interface ScheduleDTO {
     start: string
     start_t: number
     timezone: string
+    setup_t: number
   }
 }

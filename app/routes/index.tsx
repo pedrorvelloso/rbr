@@ -1,4 +1,4 @@
-import type { LoaderFunction, HeadersFunction } from '@remix-run/node'
+import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
@@ -14,6 +14,8 @@ import {
   REVALIDATION_SECONDS,
 } from '~/hooks/use-data-revalidation'
 
+import { getHeaders } from '~/utils/headers'
+
 import { Streams } from '~/ui/compositions/streams'
 import { Vods } from '~/ui/compositions/vods'
 
@@ -22,14 +24,7 @@ type IndexLoaderData = {
   vods: Array<Vod>
 }
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
-  const headers = new Headers()
-  const controlCache = loaderHeaders.get('Cache-Control')
-
-  headers.set('Cache-Control', controlCache!)
-
-  return headers
-}
+export const headers = getHeaders
 
 export const loader: LoaderFunction = async () => {
   const [streams, vods] = await Promise.all([

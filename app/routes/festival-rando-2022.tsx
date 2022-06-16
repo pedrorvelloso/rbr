@@ -6,12 +6,13 @@ import { BsCaretDownFill } from 'react-icons/bs'
 import type { ScheduleItem } from '~/services/festival/models'
 import { getSchedule } from '~/services/festival/service.server'
 
+import type { GroupedEvent } from '~/utils/events'
+import { getHeaders } from '~/utils/headers'
+import { getPageSeo } from '~/utils/seo'
+
 import { Heading } from '~/ui/components/typograph'
 import { EventDetail } from '~/ui/components/event-detail'
 import { EventsList } from '~/ui/compositions/events-list'
-
-import type { GroupedEvent } from '~/utils/events'
-import { getPageSeo } from '~/utils/seo'
 import { Anchor } from '~/ui/components/anchor'
 
 export const meta: MetaFunction = ({ parentsData }) =>
@@ -28,10 +29,14 @@ type FaistevlRaodimnzer2022PageLoaderData = {
   nextUp?: ScheduleItem
 }
 
-export const loader: LoaderFunction = () => {
-  const schedule = getSchedule()
+export const headers = getHeaders
 
-  return json<FaistevlRaodimnzer2022PageLoaderData>(schedule)
+export const loader: LoaderFunction = async () => {
+  const schedule = await getSchedule()
+
+  return json<FaistevlRaodimnzer2022PageLoaderData>(schedule, {
+    headers: { 'Cache-Control': `s-maxage=60` },
+  })
 }
 
 const FaistevlRaodimnzer2022Page = () => {

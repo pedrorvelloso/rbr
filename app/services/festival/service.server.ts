@@ -1,16 +1,18 @@
 import { getUnixTime } from 'date-fns'
 
 import { groupEvents } from '~/utils/events'
+import { request } from '~/utils/request.server'
 
 import { ItemDTO, ScheduleDTO } from './dtos'
 import { ScheduleItem } from './models'
-import schedule from './schedule.json'
 
-export const getSchedule = () => {
-  const festival = schedule as ScheduleDTO
+export const getSchedule = async () => {
+  const { data: festival } = await request<ScheduleDTO>(
+    'https://horaro.org/festivalrando/agenda.json?named=true',
+  )
 
   const {
-    schedule: { items, timezone },
+    schedule: { items, timezone, setup_t },
   } = festival
 
   const events = createScheduleResponse(items, timezone)
@@ -18,17 +20,11 @@ export const getSchedule = () => {
 
   const now = getUnixTime(new Date())
 
-  const liveNow = items.find((event, index) => {
-    const hasNext = index < items.length - 1
-    const next = items[index + 1]
-
-    return (
+  const liveNow = items.find(
+    (event) =>
       now >= event.scheduled_t &&
-      (hasNext
-        ? now < next.scheduled_t
-        : now < event.scheduled_t + event.length_t)
-    )
-  })
+      now < event.scheduled_t + event.length_t + setup_t,
+  )
 
   const liveNowIndex = items.indexOf(liveNow!)
   const nextUp = liveNowIndex > -1 ? items.at(liveNowIndex + 1) : undefined
