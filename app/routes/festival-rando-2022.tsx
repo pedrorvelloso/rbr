@@ -7,7 +7,7 @@ import type { ScheduleItem } from '~/services/festival/models'
 import { getSchedule } from '~/services/festival/service.server'
 
 import type { GroupedEvent } from '~/utils/events'
-import { getHeaders } from '~/utils/headers'
+import { getHeaders, SMaxAge } from '~/utils/headers'
 import { getPageSeo } from '~/utils/seo'
 
 import { Heading } from '~/ui/components/typograph'
@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async () => {
   const schedule = await getSchedule()
 
   return json<FaistevlRaodimnzer2022PageLoaderData>(schedule, {
-    headers: { 'Cache-Control': `s-maxage=60` },
+    headers: { ...SMaxAge(60) },
   })
 }
 
@@ -79,7 +79,7 @@ const FaistevlRaodimnzer2022Page = () => {
                 </a>
               </div>
               <div className="px-3 py-1 flex flex-col">
-                <b>{data.liveNow?.title}</b>
+                <b>{data.liveNow.title}</b>
               </div>
             </div>
           )}
@@ -87,7 +87,7 @@ const FaistevlRaodimnzer2022Page = () => {
             <div className="flex flex-col border border-neutral-700 lg:w-80">
               <div className="bg-neutral-700 px-3 py-1">Em breve</div>
               <div className="px-3 py-1 flex flex-col">
-                <b>{data.nextUp?.title}</b>
+                <b>{data.nextUp.title}</b>
               </div>
             </div>
           )}
@@ -104,9 +104,7 @@ const FaistevlRaodimnzer2022Page = () => {
             startTime={event.start}
             summary={
               <div className="w-full">
-                <span>
-                  <b>{event.title}</b> - {event.description}
-                </span>
+                <b>{event.title}</b> - {event.description}
                 <div className="flex flex-col lg:flex-row lg:gap-4 w-full">
                   <span>
                     <b>Estimativa:</b> {event.length}

@@ -8,3 +8,7 @@ export const getHeaders: HeadersFunction = ({ loaderHeaders }) => {
 
   return headers
 }
+
+export const SMaxAge = (s: number) => ({
+  'Cache-Control': `s-maxage=${s}`,
+})

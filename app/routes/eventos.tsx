@@ -5,7 +5,7 @@ import { useLoaderData } from '@remix-run/react'
 import { getEvents } from '~/services/google/service.server'
 import type { CalendarEvent } from '~/services/google/models'
 import type { GroupedEvent } from '~/utils/events'
-import { getHeaders } from '~/utils/headers'
+import { getHeaders, SMaxAge } from '~/utils/headers'
 
 import { Heading } from '~/ui/components/typograph'
 import { EventsList } from '~/ui/compositions/events-list'
@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async () => {
 
   return json<EventsPageLoaderData>(
     { events, commonTimeZone, groupedServerEvents },
-    { headers: { 'Cache-Control': `s-maxage=120` } },
+    { headers: { ...SMaxAge(120) } },
   )
 }
 

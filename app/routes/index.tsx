@@ -14,7 +14,7 @@ import {
   REVALIDATION_SECONDS,
 } from '~/hooks/use-data-revalidation'
 
-import { getHeaders } from '~/utils/headers'
+import { getHeaders, SMaxAge } from '~/utils/headers'
 
 import { Streams } from '~/ui/compositions/streams'
 import { Vods } from '~/ui/compositions/vods'
@@ -34,7 +34,7 @@ export const loader: LoaderFunction = async () => {
 
   return json<IndexLoaderData>(
     { streams, vods },
-    { headers: { 'Cache-Control': `s-maxage=${REVALIDATION_SECONDS}` } },
+    { headers: { ...SMaxAge(REVALIDATION_SECONDS) } },
   )
 }
 
