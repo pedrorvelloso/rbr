@@ -1,4 +1,4 @@
-import type { RemixNavLinkProps } from '@remix-run/react/components'
+import type { RemixNavLinkProps } from '@remix-run/react/dist/components'
 import { Link, NavLink } from '@remix-run/react'
 
 export interface AnchorProps {

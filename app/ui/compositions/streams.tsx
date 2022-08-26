@@ -20,7 +20,7 @@ export const Streams = ({ data }: StreamsProps) => {
       {data.length === 0 ? (
         <NoOneOnline />
       ) : (
-        data.map((stream) => <StreamCard {...stream} key={stream.id} />)
+        data.map((stream) => <StreamCard key={stream.id} {...stream} />)
       )}
     </Directory>
   )
