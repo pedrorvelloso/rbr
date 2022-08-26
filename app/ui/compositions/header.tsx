@@ -52,10 +52,10 @@ export const Header = () => {
               {drawerOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
             </button>
             <img
-              src="/images/rbr.png"
+              src="/images/icon.svg"
               alt="Randomizer Brasil"
               height={30}
-              width={28}
+              width={27.69}
             />
             <ul className="hidden lg:flex gap-x-8 h-full">
               {nav.map((item) => (

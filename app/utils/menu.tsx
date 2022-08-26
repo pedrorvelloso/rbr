@@ -8,7 +8,6 @@ import {
 
 export const nav = [
   { label: 'Assistir', href: '/' },
-  { label: 'Faistevl Raodimnzer 2022', href: '/festival-rando-2022' },
   { label: 'Sobre', href: '/about' },
   { label: 'Eventos', href: '/eventos' },
 ]
