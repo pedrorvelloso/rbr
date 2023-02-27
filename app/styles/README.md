@@ -1,1 +1,0 @@
-generated styles folder
