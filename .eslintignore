@@ -5,3 +5,4 @@ api/_build
 api/index.js
 app/generated/graphql.ts
 **/*.md
+app/styles
