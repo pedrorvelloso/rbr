@@ -20,7 +20,7 @@ export const socials = [
   },
   {
     icon: BsDiscord,
-    href: 'https://discord.com/invite/KTAYuY8M4b',
+    href: 'https://discord.gg/U4U62Gysku',
     label: 'Discord',
   },
   {
