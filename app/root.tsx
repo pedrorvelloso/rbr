@@ -60,7 +60,7 @@ export const links: LinksFunction = () => [
 export const loader = ({ request }: LoaderArgs) => {
   const gaTrackingId = getEnv('GA_TRACKING_ID')
 
-  return json({
+  return json<RootLoaderData>({
     url: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
@@ -70,7 +70,7 @@ export const loader = ({ request }: LoaderArgs) => {
 }
 
 // this make sure that we never reload root data when reloading for new streams
-export const unstable_shouldReload = () => false
+export const shouldRevalidate = () => false
 
 export default function App() {
   const location = useLocation()
