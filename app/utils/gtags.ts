@@ -1,7 +1,5 @@
 import { env } from './misc'
 
-export const GA_TRACKING_ID = 'G-ZPP910KW28'
-
 declare global {
   interface Window {
     gtag: (
@@ -16,7 +14,7 @@ declare global {
  * @example
  * https://developers.google.com/analytics/devguides/collection/gtagjs/pages
  */
-export const pageview = (url: string) => {
+export const pageview = (url: string, trackingId: string) => {
   if (!window.gtag) {
     if (env('production')) {
       console.warn(
@@ -25,7 +23,7 @@ export const pageview = (url: string) => {
     }
     return
   }
-  window.gtag('config', GA_TRACKING_ID, {
+  window.gtag('config', trackingId, {
     page_path: url,
   })
 }
