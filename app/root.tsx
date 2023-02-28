@@ -1,9 +1,5 @@
 import { useEffect } from 'react'
-import type {
-  MetaFunction,
-  LinksFunction,
-  LoaderFunction,
-} from '@remix-run/node'
+import type { MetaFunction, LinksFunction, LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   Links,
@@ -13,6 +9,7 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLoaderData,
   useLocation,
   useTransition,
 } from '@remix-run/react'
@@ -21,7 +18,7 @@ import tailwindCss from '~/styles/tailwind.css'
 import noScriptCss from '~/styles/no-script.css'
 
 import { getSeo } from './utils/seo'
-import { env, getDomainUrl, getUrl } from './utils/misc'
+import { env, getDomainUrl, getEnv, getUrl } from './utils/misc'
 import * as gtag from '~/utils/gtags'
 
 import { Heading } from './ui/components/typograph'
@@ -33,6 +30,7 @@ export type RootLoaderData = {
     origin: string
     path: string
   }
+  gaTrackingId: string
 }
 
 export const meta: MetaFunction = ({ data }) => {
@@ -59,12 +57,15 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet preload', href: tailwindCss, as: 'style' },
 ]
 
-export const loader: LoaderFunction = ({ request }) => {
-  return json<RootLoaderData>({
+export const loader = ({ request }: LoaderArgs) => {
+  const gaTrackingId = getEnv('GA_TRACKING_ID')
+
+  return json({
     url: {
       origin: getDomainUrl(request),
       path: new URL(request.url).pathname,
     },
+    gaTrackingId,
   })
 }
 
@@ -74,10 +75,13 @@ export const unstable_shouldReload = () => false
 export default function App() {
   const location = useLocation()
   const transition = useTransition()
+  const { gaTrackingId } = useLoaderData<typeof loader>()
 
   useEffect(() => {
-    gtag.pageview(location.pathname)
-  }, [location])
+    if (gaTrackingId.length) {
+      gtag.pageview(location.pathname, gaTrackingId)
+    }
+  }, [gaTrackingId, location])
 
   return (
     <html lang="en">
@@ -95,12 +99,26 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
-        {env('production') && (
+        {env('development') ? null : (
           <>
             <script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
             />
-            <script id="gtag-init" src="/scripts/analytics" />
+            <script
+              async
+              id="gtag-init"
+              dangerouslySetInnerHTML={{
+                __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gaTrackingId}', {
+                page_path: window.location.pathname,
+              });
+            `,
+              }}
+            />
           </>
         )}
         <LiveReload />
