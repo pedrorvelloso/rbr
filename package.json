@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.12",
+    "@prisma/client": "4.11.0",
     "@remix-run/node": "^1.13.0",
     "@remix-run/react": "^1.13.0",
     "@remix-run/vercel": "^1.13.0",
@@ -55,6 +56,7 @@
     "msw": "^1.1.0",
     "pm2": "^5.2.2",
     "prettier": "^2.8.4",
+    "prisma": "^4.11.0",
     "tailwindcss": "^3.2.7",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",

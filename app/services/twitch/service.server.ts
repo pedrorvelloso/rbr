@@ -11,6 +11,8 @@ import type {
 } from './dtos'
 
 import { isVodLongEnough } from './utils'
+import { db } from '~/utils/db.server'
+import { spliceIntoChunks } from '~/utils/misc'
 
 const fetchTwitch = createRequest(twitch.apiUrl, {
   headers: {
@@ -32,24 +34,34 @@ export const getStreamers = async (usersOrId?: Array<string>, isId = false) => {
 }
 
 export const getStreams = async (): Promise<Array<Stream>> => {
-  const {
-    data: { data },
-  } = await fetchTwitch<HelixStreamsResponse>('streams', {
-    params: {
-      user_login: userList,
-      game_id: gameList,
-      first: '100',
-    },
-  })
+  const usersList = await db.streamer.findMany()
+  // Dedupe users from static list and db list
+  // TODO this should be removed once bot is stable
+  const users = [
+    ...new Set([...usersList.map((user) => user.stream), ...userList]),
+  ]
 
-  return createStreamsResponse(data)
+  const usersChunk = spliceIntoChunks(users, 100)
+  const response = await Promise.all(
+    usersChunk.map(async (chunk) => {
+      const {
+        data: { data },
+      } = await fetchTwitch<HelixStreamsResponse>('streams', {
+        params: {
+          user_login: chunk,
+          game_id: gameList,
+          first: '100',
+        },
+      })
+
+      return data
+    }),
+  )
+
+  return createStreamsResponse(response.flatMap((streams) => streams))
 }
 
 export const getStreamsWithStreamers = async (): Promise<Array<Stream>> => {
-  // for now we're not having more than 100 users
-  // when we reach that number we'll need to break down the
-  // user array into chunks and do multiple requests
-  // to fullfill all users
   const streams = await getStreams()
   const onlineStreamers = streams.map((stream) => stream.userId)
   const streamers =
