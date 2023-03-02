@@ -32,3 +32,12 @@ export const getDomainUrl = (request: Request) => {
 export const getUrl = (url: { origin: string; path: string }) => {
   return `${url.origin}${url.path}`
 }
+
+export const spliceIntoChunks = <T>(arr: T[], chunkSize: number) => {
+  const res = []
+  while (arr.length > 0) {
+    const chunk = arr.splice(0, chunkSize)
+    res.push(chunk)
+  }
+  return res
+}
