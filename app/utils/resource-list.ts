@@ -37,4 +37,26 @@ export const gameList = [
   '27284',
   // La-Mulana
   '20422',
+  // FF V
+  '1692274562',
+  // SMW
+  '1229',
+  // FF
+  '7689',
+  // Castlevania AoS
+  '11065',
+  // TLoZ: TP
+  '17828',
+  // Order of Ecclesia
+  '18852',
+  // La-mulana 2
+  '458149',
+  // Metroid Dread
+  '212029556',
+  // Super Mario RPG: LotSS
+  '6737',
+  // Pkm HG SS
+  '23857',
+  // Rogue Legacy
+  '259945',
 ]

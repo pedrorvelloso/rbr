@@ -77,6 +77,7 @@ export const getVideos = async (userId: string) => {
     params: {
       user_id: userId,
       first: '15',
+      type: 'highlight',
     },
   })
 
