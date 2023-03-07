@@ -1,7 +1,7 @@
 import type { Stream } from '~/services/twitch/models'
 
 import { Live } from '../components/live'
-import { StreamCard } from '../components/stream-card'
+import { StreamCard } from '../components/v2/stream-card'
 import { Directory } from '../components/directory'
 
 interface StreamsProps {
