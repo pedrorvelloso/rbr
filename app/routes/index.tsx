@@ -28,12 +28,9 @@ type IndexLoaderData = {
 
 export const headers = getHeaders
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async () => {
   const vods = await getVideos('530941879')
   const streams = getStreamsWithStreamers()
-
-  // TODO remove after testing w/ hosting
-  console.log(request.cache)
 
   return defer(
     { streams, vods },
