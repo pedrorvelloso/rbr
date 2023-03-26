@@ -1,6 +1,6 @@
 import type { LoaderFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { defer } from '@remix-run/node'
+import { Await, useLoaderData } from '@remix-run/react'
 
 import type { Stream, Vod } from '~/services/twitch/models'
 
@@ -18,6 +18,8 @@ import { getHeaders, SMaxAge } from '~/utils/headers'
 
 import { Streams } from '~/ui/compositions/streams'
 import { Vods } from '~/ui/compositions/vods'
+import { Suspense } from 'react'
+import { StreamsSuspendend } from '~/ui/suspendend/streams.suspendend'
 
 type IndexLoaderData = {
   streams: Array<Stream>
@@ -27,12 +29,10 @@ type IndexLoaderData = {
 export const headers = getHeaders
 
 export const loader: LoaderFunction = async () => {
-  const [streams, vods] = await Promise.all([
-    getStreamsWithStreamers(),
-    getVideos('530941879'),
-  ])
+  const vods = await getVideos('530941879')
+  const streams = getStreamsWithStreamers()
 
-  return json<IndexLoaderData>(
+  return defer(
     { streams, vods },
     { headers: { ...SMaxAge(REVALIDATION_SECONDS) } },
   )
@@ -45,7 +45,11 @@ const IndexPage = () => {
 
   return (
     <div className="flex flex-col gap-y-12">
-      <Streams data={data.streams} />
+      <Suspense fallback={<StreamsSuspendend />}>
+        <Await resolve={data.streams}>
+          {(streams) => <Streams data={streams} />}
+        </Await>
+      </Suspense>
       <Vods data={data.vods} />
     </div>
   )
