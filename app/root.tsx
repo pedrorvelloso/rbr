@@ -11,6 +11,7 @@ import {
   useCatch,
   useLoaderData,
   useLocation,
+  useRevalidator,
   useTransition,
 } from '@remix-run/react'
 
@@ -75,6 +76,7 @@ export const shouldRevalidate = () => false
 export default function App() {
   const location = useLocation()
   const transition = useTransition()
+  const revalidator = useRevalidator()
   const { gaTrackingId } = useLoaderData<typeof loader>()
 
   useEffect(() => {
@@ -95,7 +97,11 @@ export default function App() {
       <body className="bg-purple-900 text-neutral-300">
         <Layout>
           <Outlet />
-          <Spinner isLoading={transition.state === 'loading'} />
+          <Spinner
+            isLoading={
+              transition.state === 'loading' || revalidator.state === 'loading'
+            }
+          />
         </Layout>
         <ScrollRestoration />
         <Scripts />
