@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useTransition } from '@remix-run/react'
+import { useNavigation } from '@remix-run/react'
 
 import { FaTimes, FaBars } from 'react-icons/fa'
 import clsx from 'clsx'
@@ -33,11 +33,11 @@ const NavButton: React.FC<
 
 export const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const transition = useTransition()
+  const navigation = useNavigation()
 
   useEffect(() => {
-    if (transition.state === 'loading') setDrawerOpen(false)
-  }, [transition.state])
+    if (navigation.state === 'loading') setDrawerOpen(false)
+  }, [navigation.state])
 
   return (
     <>

@@ -13,7 +13,7 @@ import { twitch } from '~/config/env.server'
 const streamsCount = Array.from({ length: 4 }, (_, i) => i + 1)
 
 const twitchHandlers: Array<RestHandler<MockedRequest>> = [
-  rest.get(`${twitch.apiUrl}/streams`, (_req, res, ctx) => {
+  rest.get(`${twitch.apiUrl}/streams`, async (_req, res, ctx) => {
     const data: HelixStreamsResponse['data'] = streamsCount.map((i) => ({
       id: i.toString(),
       user_id: i.toString(),
@@ -31,6 +31,8 @@ const twitchHandlers: Array<RestHandler<MockedRequest>> = [
       game_id: '11557',
       game_name: 'The Legend of Zelda: Ocarina of Time',
     }))
+
+    await new Promise((r) => setTimeout(r, 1300))
 
     return res(ctx.status(200), ctx.json({ data }))
   }),

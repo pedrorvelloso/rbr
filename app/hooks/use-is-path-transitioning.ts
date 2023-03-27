@@ -1,11 +1,11 @@
-import { useTransition, useLocation } from '@remix-run/react'
+import { useNavigation, useLocation } from '@remix-run/react'
 
 export const useIsPathTransitioning = () => {
-  const transition = useTransition()
+  const navigation = useNavigation()
   const location = useLocation()
 
   return (
-    transition.state === 'loading' &&
-    transition.location.pathname === location.pathname
+    navigation.state === 'loading' &&
+    navigation.location.pathname === location.pathname
   )
 }

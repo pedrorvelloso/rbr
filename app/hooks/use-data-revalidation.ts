@@ -1,4 +1,4 @@
-import { useNavigate } from '@remix-run/react'
+import { useRevalidator } from '@remix-run/react'
 import { useEffect } from 'react'
 
 export const REVALIDATION_SECONDS = 60 // 1 minute
@@ -6,16 +6,16 @@ export const REVALIDATION_SECONDS = 60 // 1 minute
 export const useDataRevalidation = (
   intervalInSeconds = REVALIDATION_SECONDS,
 ) => {
-  const navigate = useNavigate()
+  const revalidator = useRevalidator()
 
   useEffect(() => {
     const renovateStreams = setInterval(
-      () => navigate('.', { replace: true }),
+      () => revalidator.revalidate(),
       1000 * intervalInSeconds,
     )
 
     return () => {
       clearInterval(renovateStreams)
     }
-  }, [intervalInSeconds, navigate])
+  }, [intervalInSeconds, revalidator])
 }
