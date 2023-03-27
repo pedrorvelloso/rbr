@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { LoaderFunction } from '@remix-run/node'
 import { defer } from '@remix-run/node'
 import { Await, useLoaderData } from '@remix-run/react'
@@ -18,8 +19,7 @@ import { getHeaders, SMaxAge } from '~/utils/headers'
 
 import { Streams } from '~/ui/compositions/streams'
 import { Vods } from '~/ui/compositions/vods'
-import { Suspense } from 'react'
-import { StreamsSuspendend } from '~/ui/suspendend/streams.suspendend'
+import { VideosSuspended } from '~/ui/suspendend/videos.suspendend'
 
 type IndexLoaderData = {
   streams: Array<Stream>
@@ -29,7 +29,7 @@ type IndexLoaderData = {
 export const headers = getHeaders
 
 export const loader: LoaderFunction = async () => {
-  const vods = await getVideos('530941879')
+  const vods = getVideos('530941879')
   const streams = getStreamsWithStreamers()
 
   return defer(
@@ -45,12 +45,18 @@ const IndexPage = () => {
 
   return (
     <div className="flex flex-col gap-y-12">
-      <Suspense fallback={<StreamsSuspendend />}>
+      <Suspense
+        fallback={<VideosSuspended title="Ao vivo" showUpperSkeleton />}
+      >
         <Await resolve={data.streams}>
           {(streams) => <Streams data={streams} />}
         </Await>
       </Suspense>
-      <Vods data={data.vods} />
+      <Suspense
+        fallback={<VideosSuspended title="Assista mais de Rando Brasil" />}
+      >
+        <Await resolve={data.vods}>{(vods) => <Vods data={vods} />}</Await>
+      </Suspense>
     </div>
   )
 }
