@@ -19,7 +19,10 @@ import { getHeaders, SMaxAge } from '~/utils/headers'
 
 import { Streams } from '~/ui/compositions/streams'
 import { Vods } from '~/ui/compositions/vods'
-import { VideosSuspended } from '~/ui/suspendend/videos.suspendend'
+import {
+  VideosSuspended,
+  DirectoryTitleSuspended,
+} from '~/ui/suspendend/videos.suspendend'
 
 type IndexLoaderData = {
   streams: Array<Stream>
@@ -46,14 +49,25 @@ const IndexPage = () => {
   return (
     <div className="flex flex-col gap-y-12">
       <Suspense
-        fallback={<VideosSuspended title="Ao vivo" showUpperSkeleton />}
+        fallback={
+          <VideosSuspended
+            title={<DirectoryTitleSuspended title="Ao vivo" showLoader />}
+            showUpperSkeleton
+          />
+        }
       >
         <Await resolve={data.streams}>
           {(streams) => <Streams data={streams} />}
         </Await>
       </Suspense>
       <Suspense
-        fallback={<VideosSuspended title="Assista mais de Rando Brasil" />}
+        fallback={
+          <VideosSuspended
+            title={
+              <DirectoryTitleSuspended title="Assista mais de Rando Brasil" />
+            }
+          />
+        }
       >
         <Await resolve={data.vods}>{(vods) => <Vods data={vods} />}</Await>
       </Suspense>

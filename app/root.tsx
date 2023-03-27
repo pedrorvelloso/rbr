@@ -11,8 +11,8 @@ import {
   useCatch,
   useLoaderData,
   useLocation,
+  useNavigation,
   useRevalidator,
-  useTransition,
 } from '@remix-run/react'
 
 import tailwindCss from '~/styles/tailwind.css'
@@ -75,7 +75,7 @@ export const shouldRevalidate = () => false
 
 export default function App() {
   const location = useLocation()
-  const transition = useTransition()
+  const navigation = useNavigation()
   const revalidator = useRevalidator()
   const { gaTrackingId } = useLoaderData<typeof loader>()
 
@@ -99,7 +99,7 @@ export default function App() {
           <Outlet />
           <Spinner
             isLoading={
-              transition.state === 'loading' || revalidator.state === 'loading'
+              navigation.state === 'loading' || revalidator.state === 'loading'
             }
           />
         </Layout>

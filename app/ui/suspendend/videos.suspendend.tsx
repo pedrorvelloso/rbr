@@ -4,15 +4,23 @@ import { VideoSkeleton } from '../components/v2/video-skeleton'
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
-const DirectoryTitleSuspended = ({ title }: { title: string }) => (
+export const DirectoryTitleSuspended = ({
+  title,
+  showLoader,
+}: {
+  title: string
+  showLoader?: boolean
+}) => (
   <div className="flex items-center gap-x-4">
     <Heading className="font-bold">{title}</Heading>
-    <AiOutlineLoading3Quarters className="animate-spin text-primary" />
+    {showLoader && (
+      <AiOutlineLoading3Quarters className="animate-spin text-primary" />
+    )}
   </div>
 )
 
 interface VideosSuspendedProps {
-  title: string
+  title: React.ReactNode
   showUpperSkeleton?: boolean
 }
 
@@ -21,7 +29,7 @@ export const VideosSuspended = ({
   showUpperSkeleton,
 }: VideosSuspendedProps) => {
   return (
-    <Directory title={<DirectoryTitleSuspended title={title} />}>
+    <Directory title={title}>
       {[1, 2, 3, 4].map((value) => (
         <VideoSkeleton key={value} showUpperSkeleton={showUpperSkeleton} />
       ))}
