@@ -27,7 +27,7 @@ export const action = async ({ request }: ActionArgs) => {
     url,
   ).catch((err) => {
     console.error(`Failed to verify signature with current signing key: ${err}`)
-    return verify(signature, getEnv('QSTASH_CURRENT_SIGNING_KEY'), body, url)
+    return verify(signature, getEnv('QSTASH_NEXT_SIGNING_KEY'), body, url)
   })
 
   const twitchKey = await getTwitchAccessToken()
