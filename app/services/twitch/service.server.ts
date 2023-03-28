@@ -1,7 +1,8 @@
+import axios from 'axios'
+
 import { twitch } from '~/config/env.server'
 
 import { userList, gameList } from '~/utils/resource-list'
-import { createRequest } from '~/utils/request.server'
 
 import { Stream, Streamer, Vod } from './models'
 import type {
@@ -13,18 +14,26 @@ import type {
 import { isVodLongEnough } from './utils'
 import { db } from '~/utils/db.server'
 import { spliceIntoChunks } from '~/utils/misc'
+import { redis } from '~/utils/redis.server'
 
-const fetchTwitch = createRequest(twitch.apiUrl, {
+const twitchAxios = axios.create({
+  baseURL: twitch.apiUrl,
   headers: {
     'Client-ID': twitch.clientId,
-    Authorization: `Bearer ${twitch.appAccessToken}`,
   },
+})
+
+// this will make sure we use correct access token every twitch api request
+twitchAxios.interceptors.request.use(async (request) => {
+  const accessToken = (await redis.get('twitch-key')) || twitch.appAccessToken
+  request.headers['Authorization'] = `Bearer ${accessToken}`
+  return request
 })
 
 export const getStreamers = async (usersOrId?: Array<string>, isId = false) => {
   const {
     data: { data },
-  } = await fetchTwitch<HelixStreamersResponse>('users', {
+  } = await twitchAxios<HelixStreamersResponse>('users', {
     params: {
       [isId ? 'id' : 'login']: usersOrId || userList,
     },
@@ -46,7 +55,7 @@ export const getStreams = async (): Promise<Array<Stream>> => {
     usersChunk.map(async (chunk) => {
       const {
         data: { data },
-      } = await fetchTwitch<HelixStreamsResponse>('streams', {
+      } = await twitchAxios<HelixStreamsResponse>('streams', {
         params: {
           user_login: chunk,
           game_id: gameList,
@@ -73,7 +82,7 @@ export const getStreamsWithStreamers = async (): Promise<Array<Stream>> => {
 export const getVideos = async (userId: string) => {
   const {
     data: { data },
-  } = await fetchTwitch<HelixVodsResponse>('videos', {
+  } = await twitchAxios<HelixVodsResponse>('videos', {
     params: {
       user_id: userId,
       first: '15',
@@ -84,6 +93,19 @@ export const getVideos = async (userId: string) => {
   const vods = data.filter((vod) => isVodLongEnough(vod.duration)).splice(0, 4)
 
   return createVodsResponse(vods)
+}
+
+export const getTwitchAccessToken = async () => {
+  const { data } = await axios<{ access_token: string }>(twitch.apiOAuthUrl, {
+    method: 'post',
+    params: {
+      client_id: twitch.clientId,
+      client_secret: twitch.clientSecret,
+      grant_type: 'client_credentials',
+    },
+  })
+
+  return data.access_token
 }
 
 const createStreamsResponse = (data: HelixStreamsResponse['data']) =>
