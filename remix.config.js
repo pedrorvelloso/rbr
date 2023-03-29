@@ -12,6 +12,7 @@ module.exports = {
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "api/index.js",
   // publicPath: "/build/",
+  serverDependenciesToBundle: ['axios'],
   future: {
     unstable_tailwind: true,
   },
