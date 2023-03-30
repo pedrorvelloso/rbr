@@ -66,12 +66,13 @@ export const Header = () => {
             </ul>
           </div>
           <div className="hidden lg:flex gap-x-4">
-            {socials.map(({ icon: Icon, href }) => (
+            {socials.map(({ icon: Icon, href, label }) => (
               <Anchor
                 target="_blank"
                 href={href}
                 key={href}
                 className="relative before:absolute before:-inset-[6px] hover:before:bg-white/10 before:-z-10 before:rounded z-20 hover:text-white"
+                ariaLabel={label}
               >
                 <Icon size={20} />
               </Anchor>

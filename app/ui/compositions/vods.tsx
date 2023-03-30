@@ -37,13 +37,12 @@ export const Vods = ({ data }: VodsProps) => {
               width={52}
             />
             <span className="min-w-0 flex flex-col justify-center">
-              <Heading
-                size="heading3"
-                className="whitespace-nowrap overflow-hidden text-ellipsis font-semibold"
+              <p
+                className="whitespace-nowrap overflow-hidden text-ellipsis font-semibold text-sm"
                 title={vod.title}
               >
                 {vod.title}
-              </Heading>
+              </p>
               {/* client only date to prevent hydratation errors from the server. keep correct local date */}
               <ClientOnly
                 fallback={

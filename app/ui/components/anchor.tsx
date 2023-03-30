@@ -7,6 +7,7 @@ export interface AnchorProps {
   prefetch?: 'intent' | 'none' | 'render'
   target?: React.HTMLAttributeAnchorTarget
   isNav?: boolean
+  ariaLabel?: string
 }
 
 export const Anchor: React.FC<React.PropsWithChildren<AnchorProps>> = ({
@@ -16,6 +17,7 @@ export const Anchor: React.FC<React.PropsWithChildren<AnchorProps>> = ({
   target,
   children,
   isNav,
+  ariaLabel,
 }) => {
   const isExternal = href.startsWith('http://') || href.startsWith('https://')
 
@@ -26,6 +28,7 @@ export const Anchor: React.FC<React.PropsWithChildren<AnchorProps>> = ({
         rel={target === '_blank' ? 'noreferrer noopener' : undefined}
         target={target}
         className={className?.toString()}
+        aria-label={ariaLabel}
       >
         {children}
       </a>
@@ -33,13 +36,23 @@ export const Anchor: React.FC<React.PropsWithChildren<AnchorProps>> = ({
 
   if (isNav)
     return (
-      <NavLink to={href} prefetch={prefetch} className={className}>
+      <NavLink
+        to={href}
+        prefetch={prefetch}
+        className={className}
+        aria-label={ariaLabel}
+      >
         {children}
       </NavLink>
     )
 
   return (
-    <Link to={href} prefetch={prefetch} className={className?.toString()}>
+    <Link
+      to={href}
+      prefetch={prefetch}
+      className={className?.toString()}
+      aria-label={ariaLabel}
+    >
       {children}
     </Link>
   )
