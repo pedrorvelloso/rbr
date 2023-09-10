@@ -3,5 +3,11 @@
     "env": {
       "ENABLE_FILE_SYSTEM_API": "1"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/dev/tracker/:page*",
+      "destination": "https://usina.spidium.live/develop-rbr-tracker/#/:page*"
+    }
+  ]
 }
